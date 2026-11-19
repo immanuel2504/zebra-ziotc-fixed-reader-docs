@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+  <title id="title">Zebra IoT Connector Interfaces</title>
+  <desc id="desc">An application communicates in both directions with Management and Control, and receives data and events from the Data and Management Events interfaces on the reader. Interfaces can use different configured endpoints.</desc>
+  <defs>
+    <marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#16854a"/></marker>
+    <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#1d67c8"/></marker>
+    <marker id="orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#d96811"/></marker>
+    <marker id="purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#7142b9"/></marker>
+    <style>
+      text{font-family:Segoe UI,Arial,sans-serif;fill:#14243d}.title{font-size:46px;font-weight:700}.subtitle{font-size:22px;fill:#566b85}.heading{font-size:29px;font-weight:700}.small{font-size:20px;fill:#425776}.section{font-size:24px;font-weight:700;fill:#425776}.label{font-size:19px;font-weight:600;fill:#425776}.card{stroke-width:2.5}.path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <rect width="1600" height="920" fill="#fff"/>
+  <text x="800" y="68" class="title" text-anchor="middle">Zebra IoT Connector Interfaces</text>
+  <text x="800" y="108" class="subtitle" text-anchor="middle">How applications exchange information with a reader</text>
+
+  <rect x="180" y="155" width="1240" height="112" rx="16" fill="#e5f1ff" stroke="#2d6ccc" class="card"/>
+  <path d="M602 214 a17 17 0 0 1 14 -28 a24 24 0 0 1 45 6 a14 14 0 0 1 1 28 h-58 a14 14 0 0 1 -2 -6" fill="none" stroke="#1d67c8" stroke-width="4"/>
+  <text x="830" y="202" class="heading" text-anchor="middle">Application</text>
+  <text x="830" y="236" class="small" text-anchor="middle">Local application or cloud service</text>
+
+  <rect x="55" y="438" width="1490" height="260" rx="20" fill="#f5f8fc" stroke="#a5b5cb" stroke-width="2.5" stroke-dasharray="12 8"/>
+  <text x="800" y="479" class="section" text-anchor="middle">Zebra fixed RFID reader</text>
+
+  <path d="M245 267 V536" class="path" stroke="#16854a" marker-start="url(#green)" marker-end="url(#green)"/>
+  <path d="M615 267 V536" class="path" stroke="#1d67c8" marker-start="url(#blue)" marker-end="url(#blue)"/>
+  <path d="M985 536 V267" class="path" stroke="#d96811" marker-end="url(#orange)"/>
+  <path d="M1355 536 V267" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#purple)"/>
+  <path d="M985 529 V498" class="path" stroke="#d96811" marker-end="url(#orange)"/>
+  <path d="M1355 529 V498" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#purple)"/>
+
+  <rect x="127" y="330" width="236" height="59" rx="9" fill="#fff"/>
+  <text x="245" y="354" class="label" text-anchor="middle">Management commands</text><text x="245" y="380" class="label" text-anchor="middle">and responses</text>
+  <rect x="497" y="330" width="236" height="59" rx="9" fill="#fff"/>
+  <text x="615" y="354" class="label" text-anchor="middle">Control commands</text><text x="615" y="380" class="label" text-anchor="middle">and responses</text>
+  <rect x="870" y="330" width="230" height="59" rx="9" fill="#fff"/>
+  <text x="985" y="354" class="label" text-anchor="middle">Tag and supported</text><text x="985" y="380" class="label" text-anchor="middle">BLE data</text>
+  <rect x="1260" y="330" width="190" height="59" rx="9" fill="#fff"/>
+  <text x="1355" y="369" class="label" text-anchor="middle">Reader events</text>
+
+  <rect x="85" y="536" width="320" height="125" rx="15" fill="#e4f6df" stroke="#39a34a" class="card"/>
+  <text x="245" y="585" class="heading" text-anchor="middle">Management</text><text x="245" y="620" class="small" text-anchor="middle">Configure and manage</text>
+  <rect x="455" y="536" width="320" height="125" rx="15" fill="#e1efff" stroke="#4187e2" class="card"/>
+  <text x="615" y="585" class="heading" text-anchor="middle">Control</text><text x="615" y="620" class="small" text-anchor="middle">Start and stop operations</text>
+  <rect x="825" y="536" width="320" height="125" rx="15" fill="#fff0df" stroke="#e67b1c" class="card"/>
+  <text x="985" y="585" class="heading" text-anchor="middle">Data</text><text x="985" y="620" class="small" text-anchor="middle">Send observations</text>
+  <rect x="1195" y="536" width="320" height="125" rx="15" fill="#f1e8ff" stroke="#8a5ad2" class="card"/>
+  <text x="1355" y="585" class="heading" text-anchor="middle">Management Events</text><text x="1355" y="620" class="small" text-anchor="middle">Send reader events</text>
+
+  <rect x="250" y="748" width="1100" height="112" rx="14" fill="#fff" stroke="#d4deea" stroke-width="2"/>
+  <text x="280" y="787" class="section">Message flow</text>
+  <path d="M290 816 H350" class="path" stroke="#1d67c8" marker-start="url(#blue)" marker-end="url(#blue)"/>
+  <text x="365" y="823" class="small">Commands and responses</text>
+  <path d="M665 816 H725" class="path" stroke="#d96811" marker-end="url(#orange)"/>
+  <text x="740" y="823" class="small">Tag and BLE data</text>
+  <path d="M990 816 H1050" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#purple)"/>
+  <text x="1065" y="823" class="small">Reader events</text>
+  <text x="800" y="896" class="small" text-anchor="middle">Each interface is configured separately and can use a different supported endpoint.</text>
+</svg>

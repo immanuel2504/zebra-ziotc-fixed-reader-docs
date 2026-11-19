@@ -1,0 +1,26 @@
+# Dependencies (recreated by `npm ci` / `npm install`)
+node_modules/
+
+# Docusaurus generated output and cache
+build/
+.docusaurus/
+.cache/
+
+# Local backups of the replaced Handheld Reader content
+_archive/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

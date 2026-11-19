@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">Reader to Application Connection</title>
+  <desc id="description">Two example patterns: a host application forwards reader data to an enterprise system, or a reader with Zebra IoT Connector sends data to a broker or application service.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2d67b6"/></marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#16854a"/></marker>
+    <style>
+      text{font-family:Segoe UI,Arial,sans-serif;fill:#14243d}.title{font-size:46px;font-weight:700}.subtitle{font-size:22px;fill:#5a6e88}.paneltitle{font-size:29px;font-weight:700}.label{font-size:27px;font-weight:700}.small{font-size:19px;fill:#4d617c}.flow{font-size:19px;font-weight:600;fill:#34516f}.box{stroke-width:2.5}.line{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="#fff"/>
+  <text x="800" y="76" text-anchor="middle" class="title">Reader-to-Application Connection</text>
+  <text x="800" y="115" text-anchor="middle" class="subtitle">Two example integration patterns</text>
+
+  <rect x="65" y="155" width="1470" height="290" rx="22" fill="#f6f9fd" stroke="#d3dfed" stroke-width="2"/>
+  <text x="110" y="208" class="paneltitle">Host-mediated connection</text>
+  <text x="110" y="239" class="small">A host application receives reader data and forwards it to an enterprise system.</text>
+
+  <rect x="110" y="282" width="355" height="112" rx="15" fill="#e6f2ff" stroke="#3477ce" class="box"/>
+  <text x="288" y="328" class="label" text-anchor="middle">Fixed RFID Reader</text>
+  <text x="288" y="359" class="small" text-anchor="middle">Reads RFID tags</text>
+
+  <rect x="625" y="282" width="355" height="112" rx="15" fill="#e4f6df" stroke="#39a34a" class="box"/>
+  <text x="802" y="328" class="label" text-anchor="middle">Host Application</text>
+  <text x="802" y="359" class="small" text-anchor="middle">Processes and forwards data</text>
+
+  <rect x="1140" y="282" width="355" height="112" rx="15" fill="#f1eaff" stroke="#8a5ad2" class="box"/>
+  <text x="1318" y="328" class="label" text-anchor="middle">Enterprise System</text>
+  <text x="1318" y="359" class="small" text-anchor="middle">Receives reader data</text>
+
+  <path d="M475 337 H614" class="line" stroke="#2d67b6" marker-end="url(#arrow)"/>
+  <text x="545" y="322" class="flow" text-anchor="middle">LLRP / API</text>
+  <path d="M990 337 H1129" class="line" stroke="#2d67b6" marker-end="url(#arrow)"/>
+
+  <rect x="65" y="480" width="1470" height="290" rx="22" fill="#f7fbf7" stroke="#d6e8d9" stroke-width="2"/>
+  <text x="110" y="533" class="paneltitle">Connection using ZIoTC</text>
+  <text x="110" y="564" class="small">The connector sends reader data to a configured broker or application service.</text>
+
+  <rect x="110" y="607" width="390" height="112" rx="15" fill="#e6f2ff" stroke="#3477ce" class="box"/>
+  <text x="305" y="653" class="label" text-anchor="middle">Fixed RFID Reader</text>
+  <text x="305" y="684" class="small" text-anchor="middle">with Zebra IoT Connector</text>
+
+  <rect x="1050" y="607" width="445" height="112" rx="15" fill="#f1eaff" stroke="#8a5ad2" class="box"/>
+  <text x="1273" y="653" class="label" text-anchor="middle">Broker or Application Service</text>
+  <text x="1273" y="684" class="small" text-anchor="middle">Receives reader data</text>
+
+  <path d="M515 663 H1034" class="line" stroke="#16854a" marker-end="url(#arrowGreen)"/>
+  <rect x="652" y="625" width="245" height="36" rx="9" fill="#f7fbf7"/>
+  <text x="775" y="650" class="flow" text-anchor="middle">MQTT / HTTP POST</text>
+
+  <text x="800" y="831" class="subtitle" text-anchor="middle">Connections and destinations depend on the deployment.</text>
+</svg>

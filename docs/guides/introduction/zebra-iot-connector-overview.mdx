@@ -1,0 +1,48 @@
+---
+id: zebra-iot-connector-overview
+title: "Zebra IoT Connector Overview"
+sidebar_label: "Zebra IoT Connector Overview"
+sidebar_position: 1
+description: "Understand the role of Zebra IoT Connector in connecting readers to applications."
+sidebar_custom_props: { emoji: "🧩", card: "Understand the role of Zebra IoT Connector in connecting readers to applications." }
+doc_type: explanation
+page_meta:
+  - "Audience: Administrators, integrators, and developers"
+  - "Read time: 2 min"
+---
+
+import ConnectionComparison from './images/ziotc-connection-comparison.png';
+
+The **Zebra IoT Connector (ZIoTC)** enables Zebra RFID readers to communicate with local applications and cloud services. It runs on the reader and provides interfaces to configure and manage the reader, control RFID operations, and receive tag data and reader events.
+
+ZIoTC uses structured JSON messages and supports connection methods such as **MQTT**, **WebSocket**, **HTTP POST**, and **REST**. The connection methods available depend on the interface being configured.
+
+<a href={ConnectionComparison} aria-label="Open the reader connection comparison at full size">
+  <img
+    src={ConnectionComparison}
+    className="no-auto-height"
+    style={{width: '100%', height: 'auto'}}
+    alt="Two example connection patterns: a reader sends data through a host application to an enterprise system, or a reader with ZIoTC sends data to a broker or application service."
+  />
+</a>
+
+*Figure 1: Example reader-to-application connection patterns.*
+
+## Supported Readers
+
+Zebra IoT Connector supports the following readers:
+
+- FX7500
+- FX9600
+- FXR60
+- FXR90
+- ATR7000
+
+## How ZIoTC Helps
+
+- **Connects readers to applications:** ZIoTC can send data to a configured local or cloud destination. Depending on the solution, an application may not need a dedicated host computer between the reader and its destination.
+- **Provides structured messages:** Applications can receive tag observations and reader events as JSON messages for processing.
+- **Organizes communication by purpose:** Separate interfaces are used for management, control, data, and management events.
+- **Supports different deployments:** Reader interfaces can be configured for local, cloud, or hybrid solutions.
+
+For the components and information flow, see [System Architecture and Components](./system-architecture-and-components.mdx). For the purpose and endpoint options of each interface, see [ZIoTC Interfaces](./ziotc-interfaces.mdx).

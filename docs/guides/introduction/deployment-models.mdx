@@ -1,0 +1,60 @@
+---
+id: deployment-models
+title: "Deployment Models"
+sidebar_label: "Deployment Models"
+sidebar_position: 4
+description: "Compare local, cloud, and hybrid deployment models for your reader solution."
+sidebar_custom_props: { emoji: "🧩", card: "Compare local, cloud, and hybrid deployment models for your reader solution." }
+doc_type: explanation
+page_meta:
+  - "Audience: Administrators, integrators, and developers"
+  - "Read time: 3 min"
+---
+
+import DeploymentModels from './images/deployment-models.png';
+
+Zebra IoT Connector (ZIoTC) can connect a reader to local applications, cloud services, or a combination of both. The deployment model depends on where the applications and services are located.
+
+Each reader interface is configured separately and can use a different supported endpoint. The following diagram shows examples of local, cloud, and hybrid deployments.
+
+<a href={DeploymentModels} aria-label="Open the deployment models illustration at full size">
+  <img
+    src={DeploymentModels}
+    className="no-auto-height"
+    style={{width: '100%', height: 'auto'}}
+    alt="Three example deployment models: a reader connected to cloud services, a reader connected to a local network, and a reader connected to both cloud and local destinations."
+  />
+</a>
+
+*Figure 1: Example ZIoTC deployment models.*
+
+## Local / On-Premises
+
+In a local deployment, the reader communicates with applications or services on the local network.
+
+**Example:** The reader sends tag observations to a local MQTT broker. A warehouse application subscribes to the tag data and uses it to track items moving through a dock door.
+
+A local deployment can be useful when an application needs to process data at the site.
+
+## Cloud
+
+In a cloud deployment, the reader connects to a cloud IoT service over the network. Applications use the service to receive reader data and events or communicate with the reader.
+
+ZIoTC can connect to cloud services such as:
+
+- **AWS IoT Core**
+- **Microsoft Azure IoT Hub**
+
+**Example:** A retailer connects readers at multiple locations to a cloud IoT service. An inventory application receives tag observations from the readers and uses them for reporting.
+
+The reader must have network access to the cloud endpoint and the credentials required by the selected service.
+
+## Hybrid
+
+In a hybrid deployment, the reader connects to both local and cloud destinations. Different interfaces can be configured for different purposes.
+
+**Example:** **Tag Data 1** sends observations to a local application for dock-door tracking, while **Tag Data 2** sends observations to a cloud service for inventory reporting.
+
+A hybrid deployment can support local processing and cloud-based reporting in the same solution.
+
+Configure the reader's interfaces and endpoints to match the selected deployment. For connection instructions, see [Connect the Reader](../connect-the-reader/index.mdx).

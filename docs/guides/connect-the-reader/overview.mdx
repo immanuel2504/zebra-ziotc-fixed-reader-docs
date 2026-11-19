@@ -1,0 +1,63 @@
+---
+id: overview
+title: "Overview"
+sidebar_label: "Overview"
+sidebar_position: 1
+description: "Understand reader endpoints and how batching and retention affect event delivery."
+sidebar_custom_props: { emoji: "🧩", card: "Understand reader endpoints and event delivery settings." }
+doc_type: explanation
+page_meta:
+  - "Audience: Administrators and integrators"
+  - "Read time: 4 min"
+---
+
+Zebra IoT Connector uses endpoints to connect reader interfaces to applications and services. Configure each interface separately with the connection settings and destination it requires.
+
+When configuring an applicable interface, you can also set **batching** and **retention** to control how the reader groups and holds events. The available settings depend on the selected interface and endpoint type.
+
+## Batching and Retention
+
+- **Batching** groups observations into messages. It helps control how frequently the reader sends data and the size of each message.
+- **Retention** controls how events are held when delivery is delayed, such as during a connection interruption.
+
+Configure these settings separately for each applicable interface. Before choosing values, consider the message size and reporting frequency your receiving application can handle, along with the expected event volume and length of a connection interruption.
+
+### Configure Batching
+
+1. In the reader web console, go to **Settings > Endpoint**.
+2. Select the interface you want to configure.
+3. Select the **Batching and Retention** tab.
+4. Under **Batching**, configure the following fields:
+
+| Field | Description |
+| --- | --- |
+| **Reporting Interval (in milliseconds)** | The time the reader waits before reporting a batch. |
+| **Max Payload Size (in bytes)** | The maximum size of a report payload. |
+
+The reader sends a report when either the reporting interval or the payload size limit is reached.
+
+**Example:** If the reporting interval is `1000` milliseconds, the reader can report a batch after one second. If the batch reaches the configured payload size first, the reader sends it earlier.
+
+A shorter reporting interval can make data available to the application sooner. A longer interval can group more observations into fewer messages.
+
+### Configure Retention
+
+Under **Retention**, configure the following fields:
+
+| Field | Description |
+| --- | --- |
+| **Throttle (in events per second)** | The configured event rate, measured in events per second. |
+| **No. of Events** | The number of events to retain. |
+| **Event Retention Time (in minutes)** | How long to retain events, in minutes. |
+
+Choose values that suit the event volume and expected length of a connection interruption. Retention is subject to the configured event count and time limits.
+
+**Example:** If the connection to the destination is temporarily unavailable, retention settings control how the reader holds events awaiting delivery. Consider both the number of events generated and the duration of the interruption when selecting values.
+
+### Publish and Verify
+
+1. Select **Preview** and review the settings for the selected interface.
+2. Select **Publish** to apply the configuration.
+3. Generate events and confirm that the receiving application gets the expected messages.
+4. Check the message frequency and size against the needs of the receiving application.
+5. Repeat the configuration for each additional interface that requires batching and retention.

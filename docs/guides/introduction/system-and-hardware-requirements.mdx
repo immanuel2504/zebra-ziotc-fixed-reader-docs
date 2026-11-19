@@ -1,0 +1,48 @@
+---
+id: system-and-hardware-requirements
+title: "System and Hardware Requirements"
+sidebar_label: "System and Hardware Requirements"
+sidebar_position: 5
+description: "Review reader, hardware, network, and application requirements before setup."
+sidebar_custom_props: { emoji: "📚", card: "Review reader, hardware, network, and application requirements before setup." }
+doc_type: reference
+page_meta:
+  - "Audience: Administrators and integrators"
+  - "Read time: 2 min"
+---
+
+Before configuring Zebra IoT Connector (ZIoTC), ensure that the reader is installed and can communicate with the applications or services in your deployment.
+
+## Reader and Firmware
+
+Use a supported Zebra RFID reader with firmware that supports the ZIoTC features required for your deployment.
+
+For firmware and product documentation, visit [Zebra RFID Support](https://www.zebra.com/us/en/support-downloads/rfid.html) and select your reader model.
+
+## Hardware Installation
+
+Follow the [integration guide](https://www.zebra.com/content/dam/support-dam/en/documentation/unrestricted/guide/product/fxseries-ig-en.pdf) for hardware requirements and installation instructions, including:
+
+- Mounting and placement
+- Power supply
+- Antennas and cables
+- Network connections
+- Supported accessories
+
+For other reader models, find the applicable integration guide on [Zebra RFID Support](https://www.zebra.com/us/en/support-downloads/rfid.html).
+
+## Network and Application Requirements
+
+Prepare the following for the connection you plan to use:
+
+- Network connectivity between the reader and the destination.
+- The address and port of the MQTT broker, cloud service, or application endpoint.
+- An account, device identity, or credentials required by the destination.
+- Certificates and private keys, if required for a secure connection.
+- MQTT topic names and permissions, if using MQTT.
+
+## Administration
+
+Use a computer with network access to the reader and a web browser to open the reader web console. Obtain the credentials needed to sign in.
+
+For installation and initial setup, continue to [Getting Started](../getting-started/index.mdx).

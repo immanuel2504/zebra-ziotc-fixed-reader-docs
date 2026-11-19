@@ -1,0 +1,87 @@
+---
+id: ziotc-interfaces
+title: "ZIoTC Interfaces"
+sidebar_label: "ZIoTC Interfaces"
+sidebar_position: 3
+description: "Understand the responsibilities of the management, control, data, and management events interfaces."
+sidebar_custom_props: { emoji: "🧩", card: "Understand the responsibilities of the management, control, data, and management events interfaces." }
+doc_type: explanation
+page_meta:
+  - "Audience: Administrators, integrators, and developers"
+  - "Read time: 4 min"
+---
+
+import InterfacesDiagram from './images/ziotc-interfaces.png';
+
+Zebra IoT Connector (ZIoTC) provides four interfaces for communication between a fixed RFID reader and applications.
+
+Applications use the **Management** and **Control** interfaces to send commands and receive responses. The reader uses the **Data** and **Management Events** interfaces to send observations and events to configured endpoints.
+
+Each interface is configured separately and can use its own supported endpoint.
+
+<a href={InterfacesDiagram} aria-label="Open the interfaces diagram at full size">
+  <img
+    src={InterfacesDiagram}
+    className="no-auto-height"
+    style={{width: '100%', height: 'auto'}}
+    alt="The Management and Control interfaces exchange commands and responses with applications. The Data interface sends tag and supported BLE data, and the Management Events interface sends reader events."
+  />
+</a>
+
+*Figure 1: Communication through the ZIoTC interfaces.*
+
+| Interface | Purpose | Communication |
+| --- | --- | --- |
+| **Management** | Configure and maintain the reader. | The application sends a request, and the reader returns a response. |
+| **Control** | Control RFID operations, including starting and stopping inventory. | The application sends a request, and the reader returns a response. |
+| **Data** | Deliver RFID tag observations and supported BLE scan data. | The reader sends observations to configured data endpoints. |
+| **Management Events** | Report reader health and operational events. | The reader sends events to a configured endpoint. |
+
+## Management Interface
+
+Use the **Management** interface to configure, administer, and monitor the reader.
+
+Management operations include configuring network and time settings, managing certificates, retrieving reader information, and updating firmware.
+
+An application can send management commands through MQTT or the local REST API:
+
+- **MQTT:** The application publishes a command to the configured command topic and receives the response on the configured response topic.
+- **Local REST:** The application sends a request to the reader and receives the result in the HTTP response.
+
+**Example:** A monitoring application configures the reader's heartbeat interval through the Management interface.
+
+## Control Interface
+
+Use the **Control** interface to start and stop RFID inventory and perform other supported RFID operations.
+
+Control operations include selecting an operating mode, configuring how tags are read, and performing supported tag memory operations.
+
+An application can send control commands through MQTT or the local REST API:
+
+- **MQTT:** The application publishes a command to the configured command topic and receives the response on the configured response topic.
+- **Local REST:** The application sends a request to the reader and receives the result in the HTTP response.
+
+**Example:** A warehouse application sends a start inventory command when a shipment arrives at a dock door. The reader returns the command response through the Control interface and sends tag observations through the Data interface.
+
+## Data Interface
+
+Use the **Data** interface to receive RFID tag observations and, on supported readers, Bluetooth Low Energy (BLE) beacon detections.
+
+A tag observation can include information such as the Electronic Product Code (EPC), timestamp, antenna identifier, and signal strength.
+
+The reader provides **Tag Data 1** and **Tag Data 2** interfaces. Configure each interface separately to send data to its intended destination.
+
+The Data interface also provides settings for:
+
+- **Batching:** Groups observations into messages according to the configured settings.
+- **Retention:** Controls how events are buffered, including during a connection interruption.
+
+**Example:** A reader sends tag observations to two destinations. A local application uses them to track items passing through a dock door, while a cloud application uses them for inventory reporting.
+
+## Management Events Interface
+
+Use the **Management Events** interface to receive information about reader health and operational status.
+
+Events can include heartbeats, warnings, errors, general-purpose input (GPI) state changes, and on-reader application events. Heartbeats are sent at the configured interval; other events are sent when the corresponding condition occurs.
+
+**Example:** A monitoring application configures the heartbeat interval through the Management interface. It then receives heartbeat events through the Management Events interface.

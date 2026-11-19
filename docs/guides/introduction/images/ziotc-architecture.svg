@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1780" viewBox="0 0 1600 1780" role="img" aria-labelledby="title desc">
+  <title id="title">Zebra IoT Connector System Architecture</title>
+  <desc id="desc">A functional block diagram of an MQTT connection between an application and four reader interfaces, with a separate direct REST path for management and control.</desc>
+  <defs>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#16854a"/></marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1d67c8"/></marker>
+    <marker id="arrowBlueSmall" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1d67c8"/></marker>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#d96811"/></marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7142b9"/></marker>
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#304763"/></marker>
+    <style>
+      text{font-family:Segoe UI,Arial,sans-serif;fill:#14243d} .title{font-size:46px;font-weight:700}.subtitle{font-size:21px;fill:#566b85}.label{font-size:28px;font-weight:700}.small{font-size:19px;fill:#425776}.section{font-size:23px;font-weight:700;fill:#425776}.path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4}.card{stroke-width:2.5}.legend{font-size:18px;fill:#4a5c73}
+    </style>
+  </defs>
+  <rect width="1600" height="1780" fill="#fff"/>
+  <text x="800" y="68" class="title" text-anchor="middle">Zebra IoT Connector Architecture</text>
+  <text x="800" y="104" class="subtitle" text-anchor="middle">Example MQTT and local REST communication paths</text>
+
+  <!-- External application -->
+  <rect x="465" y="142" width="670" height="94" rx="15" fill="#e5f1ff" stroke="#2d6ccc" class="card"/>
+  <path d="M 565 196 a 17 17 0 0 1 14 -28 a 24 24 0 0 1 45 6 a 14 14 0 0 1 1 28 h -58 a 14 14 0 0 1 -2 -6" fill="none" stroke="#1d67c8" stroke-width="4"/>
+  <text x="800" y="181" class="label" text-anchor="middle">External Application</text>
+  <text x="800" y="212" class="small" text-anchor="middle">Local application or cloud service</text>
+
+  <!-- MQTT broker between the application and interfaces -->
+  <rect x="465" y="290" width="670" height="80" rx="15" fill="#f3efff" stroke="#7956bd" class="card"/>
+  <text x="800" y="324" class="label" text-anchor="middle">MQTT Broker or Cloud IoT Platform</text>
+  <text x="800" y="353" class="small" text-anchor="middle">Routes MQTT messages</text>
+  <path d="M800 236 V290" class="path" stroke="#304763" marker-start="url(#arrowDark)" marker-end="url(#arrowDark)"/>
+  <path d="M530 370 V400 H215 V530" class="path" stroke="#16854a" marker-start="url(#arrowGreen)" marker-end="url(#arrowGreen)"/>
+  <path d="M680 370 V425 H605 V530" class="path" stroke="#1d67c8" marker-start="url(#arrowBlue)" marker-end="url(#arrowBlue)"/>
+  <path d="M995 530 V450 H850 V370" class="path" stroke="#d96811" marker-end="url(#arrowOrange)"/>
+  <path d="M1385 530 V475 H1040 V370" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#arrowPurple)"/>
+  <g transform="translate(0 190)">
+  <!-- Interface cards -->
+  <rect x="45" y="340" width="340" height="104" rx="15" fill="#e4f6df" stroke="#39a34a" class="card"/>
+  <circle cx="94" cy="388" r="20" fill="none" stroke="#16854a" stroke-width="5"/><path d="M84 388 h20 M94 378 v20" stroke="#16854a" stroke-width="4"/>
+  <text x="222" y="382" class="label" text-anchor="middle">Management</text><text x="222" y="414" class="small" text-anchor="middle">Configure and manage</text>
+  <rect x="435" y="340" width="340" height="104" rx="15" fill="#e1efff" stroke="#4187e2" class="card"/>
+  <path d="M478 370 l28 18 -28 18 z" fill="#1d67c8"/>
+  <text x="615" y="382" class="label" text-anchor="middle">Control</text><text x="615" y="414" class="small" text-anchor="middle">Start, stop, and operate</text>
+  <rect x="825" y="340" width="340" height="104" rx="15" fill="#fff0df" stroke="#e67b1c" class="card"/>
+  <path d="M853 408 v-14 M864 408 v-24 M875 408 v-34" fill="none" stroke="#d96811" stroke-width="6" stroke-linecap="round"/>
+  <text x="1015" y="382" class="label" text-anchor="middle">Data</text><text x="1015" y="414" class="small" text-anchor="middle">Tag and supported BLE data</text>
+  <rect x="1215" y="340" width="340" height="104" rx="15" fill="#f1e8ff" stroke="#8a5ad2" class="card"/>
+  <text x="1385" y="382" class="label" text-anchor="middle">Management Events</text><text x="1385" y="414" class="small" text-anchor="middle">Heartbeat, alerts, and GPIO</text>
+
+  <!-- Reader enclosure and gateway -->
+  <rect x="125" y="525" width="1350" height="494" rx="20" fill="#f5f8fc" stroke="#a5b5cb" stroke-width="2.5" stroke-dasharray="12 8"/>
+  <text x="155" y="565" class="section">Inside the reader</text>
+  <rect x="560" y="585" width="480" height="106" rx="15" fill="#eee6ff" stroke="#7a4ec2" class="card"/>
+  <path d="M620 613 h30 v15 h-30 z M605 652 h25 v15 h-25 z M640 652 h25 v15 h-25 z M635 628 v11 h-18 v13 M635 639 h18 v13" fill="none" stroke="#7142b9" stroke-width="4"/>
+  <text x="820" y="626" class="label" text-anchor="middle">Reader Gateway</text><text x="820" y="658" class="small" text-anchor="middle">Connects reader interfaces</text>
+
+  <!-- Four logical interface links, direction matches message flow -->
+  <path d="M215 444 V 490 H 635 V 585" class="path" stroke="#16854a" marker-start="url(#arrowGreen)" marker-end="url(#arrowGreen)"/>
+  <path d="M605 444 V 470 H 745 V 585" class="path" stroke="#1d67c8" marker-start="url(#arrowBlue)" marker-end="url(#arrowBlue)"/>
+  <path d="M855 585 V 470 H 995 V 444" class="path" stroke="#d96811" marker-end="url(#arrowOrange)"/>
+  <path d="M965 585 V 490 H 1385 V 444" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#arrowPurple)"/>
+
+  <rect x="230" y="760" width="430" height="108" rx="15" fill="#dff7ec" stroke="#18a079" class="card"/>
+  <text x="445" y="804" class="label" text-anchor="middle">Reader Manager</text><text x="445" y="837" class="small" text-anchor="middle">Configuration and management</text>
+  <rect x="930" y="760" width="360" height="108" rx="15" fill="#e2f1ff" stroke="#4288df" class="card"/>
+  <text x="1110" y="804" class="label" text-anchor="middle">Radio Control</text><text x="1110" y="837" class="small" text-anchor="middle">Controls RFID operation</text>
+  <rect x="930" y="908" width="360" height="75" rx="14" fill="#fff1d6" stroke="#e5a127" class="card"/>
+  <text x="1110" y="956" class="label" text-anchor="middle">RFID Radio</text>
+  <path d="M 700 691 V 725 H 445 V 760" class="path" stroke="#7142b9" marker-start="url(#arrowPurple)" marker-end="url(#arrowPurple)"/>
+  <path d="M 900 691 V 725 H 1110 V 760" class="path" stroke="#1d67c8" marker-start="url(#arrowBlue)" marker-end="url(#arrowBlue)"/>
+  <path d="M1110 868 V908" class="path" stroke="#1d67c8" marker-start="url(#arrowBlueSmall)" marker-end="url(#arrowBlueSmall)"/>
+  <rect x="932" y="1090" width="356" height="70" rx="14" fill="#ffe6e5" stroke="#e66a67" class="card"/>
+  <text x="1110" y="1136" class="label" text-anchor="middle">RFID Antenna</text>
+  <rect x="932" y="1220" width="356" height="70" rx="14" fill="#edf1f7" stroke="#9aaec5" class="card"/>
+  <text x="1110" y="1266" class="label" text-anchor="middle">RFID Tags</text>
+  <path d="M1110 983 V1090" class="path" stroke="#304763" marker-start="url(#arrowDark)" marker-end="url(#arrowDark)"/>
+  <path d="M1110 1160 V1220" class="path" stroke="#304763" marker-start="url(#arrowDark)" marker-end="url(#arrowDark)"/>
+
+  <rect x="170" y="1074" width="610" height="185" rx="14" fill="#fff" stroke="#d4deea" stroke-width="2"/>
+  <text x="195" y="1125" class="section">Message flow</text>
+  <path d="M198 1155 h90" class="path" stroke="#304763" marker-start="url(#arrowDark)" marker-end="url(#arrowDark)"/>
+  <text x="310" y="1162" class="legend">Two-way communication</text>
+  <path d="M198 1194 h90" class="path" stroke="#d96811" marker-end="url(#arrowOrange)"/>
+  <text x="310" y="1201" class="legend">Data sent by the reader</text>
+  <path d="M198 1232 h90" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#arrowPurple)"/>
+  <text x="310" y="1239" class="legend">Events sent by the reader</text>
+  </g>
+  <!-- Direct REST path, shown separately to keep the routes readable -->
+  <rect x="170" y="1540" width="1260" height="195" rx="18" fill="#f7faff" stroke="#cbd9eb" stroke-width="2"/>
+  <text x="200" y="1578" class="section">Direct local REST path</text>
+  <rect x="200" y="1605" width="370" height="86" rx="14" fill="#e5f1ff" stroke="#2d6ccc" class="card"/>
+  <text x="385" y="1657" class="label" text-anchor="middle">Local Application</text>
+  <path d="M590 1648 H1010" class="path" stroke="#304763" marker-start="url(#arrowDark)" marker-end="url(#arrowDark)"/>
+  <rect x="638" y="1617" width="325" height="30" rx="5" fill="#f7faff"/>
+  <text x="800" y="1640" class="small" text-anchor="middle">REST commands and responses</text>
+  <rect x="1030" y="1605" width="370" height="86" rx="14" fill="#e7f6e5" stroke="#39a34a" class="card"/>
+  <text x="1215" y="1641" class="label" text-anchor="middle">Management / Control</text>
+  <text x="1215" y="1671" class="small" text-anchor="middle">Reader interfaces</text>
+  <text x="800" y="1721" class="legend" text-anchor="middle">The local REST path connects directly to the reader, without an MQTT broker.</text>
+</svg>

@@ -1,0 +1,56 @@
+---
+id: system-architecture-and-components
+title: "System Architecture and Components"
+sidebar_label: "System Architecture and Components"
+sidebar_position: 2
+description: "Explore the reader, connector, network, and application components and how they interact."
+sidebar_custom_props: { emoji: "🧩", card: "Explore the reader, connector, network, and application components and how they interact." }
+doc_type: explanation
+page_meta:
+  - "Audience: Administrators, integrators, and developers"
+  - "Read time: 3 min"
+---
+
+import ArchitectureDiagram from './images/ziotc-architecture.png';
+
+Zebra IoT Connector (ZIoTC) runs on the reader and connects its management and RFID functions to external applications. Applications can configure the reader, control RFID operations, and receive tag data and reader events through ZIoTC interfaces.
+
+The diagram shows the main components and examples of MQTT and local REST communication.
+
+<a href={ArchitectureDiagram} aria-label="Open the architecture diagram at full size">
+  <img
+    src={ArchitectureDiagram}
+    className="no-auto-height"
+    style={{width: '100%', height: 'auto'}}
+    alt="Architecture diagram showing an application communicating through an MQTT broker with the Management, Control, Data, and Management Events interfaces. A separate local REST path connects an application directly to Management and Control. The Reader Gateway connects the interfaces to reader management and radio functions."
+  />
+</a>
+
+*Figure 1: Zebra IoT Connector system architecture.*
+
+## System Components
+
+| Component | Purpose |
+| --- | --- |
+| **Reader Gateway** | Connects the ZIoTC interfaces to the reader's management and radio functions and handles communication with configured endpoints. |
+| **Reader Manager** | Handles reader configuration and management operations. |
+| **Radio Control** | Manages RFID operations, including starting and stopping tag inventory. |
+| **RFID radio and antenna** | Communicate with RFID tags so the reader can collect tag observations. The antenna can be integrated or externally connected, depending on the reader. |
+| **RFID tags** | Provide the data collected by the reader during RFID operations. |
+| **MQTT broker or cloud IoT platform** | Routes MQTT messages between the reader and applications when an interface uses MQTT. |
+| **External application** | Sends commands or uses tag data and reader events. The application can run locally or use cloud services. |
+
+## How Information Flows
+
+1. An application sends configuration and administration commands through the **Management** interface. The reader returns the corresponding responses.
+2. The application uses the **Control** interface to control RFID operations, such as starting or stopping tag inventory. The reader returns responses to those commands.
+3. During inventory, the radio and antenna communicate with RFID tags. The **Data** interface sends tag observations to its configured destination. On supported readers, it can also send BLE scan data.
+4. The **Management Events** interface sends reader events, such as status and health notifications, to its configured destination.
+
+## Connection Paths
+
+In the MQTT example, the reader exchanges messages with applications through an MQTT broker or cloud IoT platform. An application can also use local REST to communicate directly with the reader's Management and Control interfaces.
+
+Each interface is configured separately and can use its own supported endpoint. For example, tag data can be sent to a local inventory application while management events are sent to a cloud monitoring service.
+
+For details about the four interfaces, see [ZIoTC Interfaces](./ziotc-interfaces.mdx). For connection procedures, see [Connect the Reader](../connect-the-reader/index.mdx).

@@ -1,0 +1,191 @@
+---
+id: connect-to-an-mqtt-broker
+title: "How do I connect to an MQTT broker?"
+sidebar_label: "How do I connect to an MQTT broker?"
+sidebar_position: 2
+description: "Configure and verify an MQTT connection for a reader interface."
+sidebar_custom_props: { emoji: "🛠", card: "Configure and verify an MQTT connection for a reader interface." }
+doc_type: how-to
+page_meta:
+  - "Audience: Administrators and integrators"
+  - "Read time: 8 min"
+---
+
+Configure an MQTT connection to exchange commands, responses, tag data, or management events with the reader.
+
+:::note
+Configure each interface separately, even if the interfaces use the same broker. Complete Steps 1–7 for one interface before selecting another.
+:::
+
+## Before You Begin
+
+For each interface, obtain:
+
+- Broker hostname or IP address, listening port, and protocol.
+- MQTT client ID and broker credentials, if required.
+- Topic names and the permissions needed to publish and subscribe.
+- Certificates and private key, if required for a secure connection.
+- Batching and retention values, if configuring Tag Data or Management Events.
+
+Ensure that the reader can reach the broker over the network.
+
+## Step 1: Select the Interface
+
+1. Sign in to the reader web console.
+2. Go to **Settings > Endpoint**.
+3. Select the interface you want to configure.
+
+![Endpoint page with the Management interface selected](./images/mqtt-select-interface.png)
+
+*Figure 1: Select an interface on the Endpoint page.*
+
+| Interface | Purpose |
+| --- | --- |
+| **Management** | Configure and administer the reader. |
+| **Control** | Control RFID operations, including starting and stopping reading. |
+| **Tag Data 1 / Tag Data 2** | Send tag observations to an application. |
+| **Management Events** | Send events such as heartbeats, GPIO events, errors, and warnings. |
+
+4. Set **Endpoint Type** to **MQTT**.
+5. Enter an **Endpoint Name** and **Endpoint Description**.
+
+## Step 2: Configure the Connection
+
+Select the **Connections** tab and enter the settings for the broker used by the selected interface.
+
+![MQTT Connections tab with Control selected](./images/mqtt-connection.png)
+
+*Figure 2: MQTT connection settings for the selected interface.*
+
+| Field | Description |
+| --- | --- |
+| **Server** | Enter the broker hostname or IP address. |
+| **Port** | Enter the broker’s listening port for the selected protocol. |
+| **Protocol** | Select the transport configured on the broker, such as TCP, TLS, Web Socket, or Secure WebSocket. |
+| **Client Id** | Enter the identifier for this MQTT connection. Avoid using the same client ID for multiple active connections to the same broker. |
+| **Clean Session** | Select the session behavior required by your application. |
+| **Debug** | Enable when collecting connection information for troubleshooting. |
+| **BASIC Authentication** | Enable and enter the username and password if required by the broker. |
+| **Keep Alive** | Enter the keep-alive interval for the connection. |
+| **Qos** | Select the quality of service required by your application and supported by the reader. |
+
+Use the port configured on your broker. For example, MQTT over TCP commonly uses port `1883`, and MQTT over TLS commonly uses port `8883`.
+
+## Step 3: Configure Topics
+
+Select the **Topic** tab and configure the topics for the selected interface. The examples below are illustrative; use the topic names and permissions configured for your broker and application.
+
+### Management Interface
+
+| Field | Purpose | Example |
+| --- | --- | --- |
+| **Command Topic** | The reader subscribes to this topic to receive management commands. | `readers/reader-01/management/command` |
+| **Response Topic** | The reader publishes management responses to this topic. | `readers/reader-01/management/response` |
+
+### Control Interface
+
+| Field | Purpose | Example |
+| --- | --- | --- |
+| **Command Topic** | The reader subscribes to this topic to receive control commands. | `readers/reader-01/control/command` |
+| **Response Topic** | The reader publishes control responses to this topic. | `readers/reader-01/control/response` |
+
+### Tag Data Interface
+
+Configure the publish topic for the selected **Tag Data 1** or **Tag Data 2** interface.
+
+| Field | Purpose | Example |
+| --- | --- | --- |
+| **Publish Topic** | The reader publishes tag observations to this topic. | `readers/reader-01/data/tags` |
+
+### Management Events Interface
+
+| Field | Purpose | Example |
+| --- | --- | --- |
+| **Publish Topic** | The reader publishes management events to this topic. | `readers/reader-01/events` |
+
+## Step 4: Configure Certificates
+
+:::note
+Complete this step if you selected **TLS** or **Secure WebSocket**. Otherwise, continue to Step 5.
+:::
+
+Select the **Certificates** tab and configure the certificates required by the broker for the selected interface.
+
+If the broker requires client certificate authentication, choose **Option A** or **Option B**.
+
+### Option A: Use Installed Certificates
+
+1. Select **Use Installed Certs**.
+2. In the **Certificate** list, select the installed certificate required for the connection.
+
+![Certificates tab with Use Installed Certs selected](./images/mqtt-installed-certificates.png)
+
+*Figure 3: Certificate settings using installed certificates.*
+
+### Option B: Use Certificate File Paths
+
+1. Clear **Use Installed Certs**.
+2. In **Certificate Path**, enter the absolute path to the client certificate.
+3. In **Private Key Path**, enter the absolute path to the corresponding private key.
+
+![Certificates tab showing certificate and private key path fields](./images/mqtt-certificate-paths.png)
+
+*Figure 4: Certificate settings using file paths.*
+
+### Configure the CA Certificate
+
+Choose how to provide the CA certificate used to validate the broker:
+
+- **Use the reader’s certificate store:** Select **Use CA Certs from Store**.
+- **Use a certificate file:** Clear **Use CA Certs from Store** and enter the file’s absolute path in **CA Certificate Path**.
+
+Check the **Cert Algorithm** and **Cert Format** values against your certificate configuration. Select **Verify Server Certificate** and **Verify Host Name**.
+
+## Step 5: Configure Batching and Retention
+
+:::note
+This step applies to **Tag Data 1**, **Tag Data 2**, and **Management Events**. If you selected **Management** or **Control**, continue to Step 6.
+:::
+
+Select the **Batching and Retention** tab and enter the settings required for the selected interface.
+
+![Batching and Retention tab with Tag Data 1 selected](./images/mqtt-batching-retention.png)
+
+*Figure 5: Batching and retention settings for Tag Data 1.*
+
+Under **Batching**, configure:
+
+| Field | Setting |
+| --- | --- |
+| **Reporting Interval (in milliseconds)** | Enter the reporting interval. |
+| **Max Payload Size (in bytes)** | Enter the maximum payload size. |
+
+Under **Retention**, configure:
+
+| Field | Setting |
+| --- | --- |
+| **Throttle (in events per second)** | Enter the throttle value. |
+| **No. of Events** | Enter the number of events to retain. |
+| **Event Retention Time (in minutes)** | Enter the event retention time. |
+
+## Step 6: Publish the Configuration
+
+1. Confirm that the correct interface is selected.
+2. Select **Preview** and review the connection, topic, certificate, and applicable batching and retention settings.
+3. Select **Publish** to apply the configuration.
+4. Check that the selected interface shows **connected**.
+
+## Step 7: Verify Communication
+
+Connect an MQTT client to the broker configured for the selected interface. Then perform the applicable check:
+
+| Interface | Verification |
+| --- | --- |
+| **Management** | Subscribe to the response topic. Send a supported management command to the command topic and confirm that a response arrives. |
+| **Control** | Subscribe to the response topic. Send a supported control command to the command topic, then confirm the response and resulting reader state. |
+| **Tag Data 1 / Tag Data 2** | Subscribe to the data topic. Start RFID inventory, present a tag to the reader, and confirm that tag data arrives. |
+| **Management Events** | Subscribe to the events topic and confirm that an enabled event, such as a configured heartbeat, arrives. |
+
+The **connected** status confirms the broker connection. Receiving the expected response, tag data, or event confirms the message flow.
+
+To configure another interface, select it and repeat **Steps 1–7** using its broker settings.
