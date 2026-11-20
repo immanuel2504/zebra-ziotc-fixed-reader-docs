@@ -356,7 +356,7 @@ export default async function createConfig(): Promise<Config> {
   };
 
   const config: Config = {
-  title: 'Zebra Fixed Reader',
+  title: 'Zebra IoT Connector Documentation',
   tagline: 'MQTT API Documentation for RFD40 / RFD90 Series Handheld RFID Reader Sleds',
   url: 'https://ubiquitous-bassoon-kmn533n.pages.github.io',
   baseUrl,
@@ -963,7 +963,7 @@ export default async function createConfig(): Promise<Config> {
       // measured above, and the recorded gap is that no rulebook governs a navbar label
       // today. If the case is ever to move it moves by a ruling and then by a
       // re-measurement, in that order — not by reading a prose rule onto chrome.
-      title: 'Fixed Reader',
+      title: 'IoT Connector',
       logo: {
         alt: 'Zebra Technologies',
         src: 'img/brand/zebra-logo-black-horizontal.svg',
