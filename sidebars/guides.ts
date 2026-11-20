@@ -84,11 +84,10 @@ const sidebars = {
       className: 'sidebar-section-header sidebar-icon sidebar-icon--bolt',
       collapsible: true,
       collapsed: true,
-      customProps: { emoji: '🚀', card: 'TODO: one-sentence summary of this chapter.' },
+      customProps: { emoji: '🚀', card: 'Install the reader, sign in, check readiness, and read your first tag.' },
       link: { type: 'doc', id: 'guides/getting-started/index' },
       items: [
         'guides/getting-started/prerequisites-and-pre-installation-checklist',
-        'guides/getting-started/install-the-reader-and-connect-antennas',
         'guides/getting-started/discover-access-and-sign-in-to-the-reader',
         'guides/getting-started/configure-regulatory-region-date-and-time',
         'guides/getting-started/verify-reader-readiness-and-status',

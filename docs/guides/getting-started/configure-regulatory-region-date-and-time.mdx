@@ -3,24 +3,31 @@ id: configure-regulatory-region-date-and-time
 title: "Configure Regulatory Region, Date, and Time"
 sidebar_label: "Configure Regulatory Region, Date, and Time"
 sidebar_position: 4
-description: "TODO: one-sentence summary of this topic."
-sidebar_custom_props: { emoji: "🛠", card: "TODO: one-sentence summary of this topic." }
+description: "Set the reader's regulatory region and check its date and time."
+sidebar_custom_props: { emoji: "🛠", card: "Set the reader's regulatory region and check its date and time." }
 doc_type: how-to
 page_meta:
-  - "Audience: TODO"
-  - "Read time: TODO min"
+  - "Audience: Administrators and installers"
+  - "Read time: 3 min"
 ---
 
-{/* TOC topic 2.4 | Type: Task */}
-
-{/* TODO: write the content for this topic. */}
+Set the regulatory region for the reader's installation location and check its date and time before starting RFID operations or configuring secure connections.
 
 ## Configure the Regulatory Region
 
-{/* TODO */}
+1. Sign in to the reader web console.
+2. Open the reader's regulatory region settings and select the region that matches its physical location.
+3. Save or apply the setting and follow any prompts shown by the reader.
+4. Confirm that the selected region is displayed.
+
+If the region is already configured, verify that it matches the installation location. Use the integration guide for your reader model for the location of the setting and any model-specific requirements.
 
 ## Configure Date and Time
 
-{/* TOC detail: NTP */}
+1. In the reader's time settings, check the date, time, and time zone.
+2. If your deployment uses a network time server and the reader supports it, configure the server details provided by your administrator.
+3. Save the settings and confirm that the displayed time is correct.
 
-{/* TODO */}
+Accurate time helps the reader evaluate certificate validity for secure connections. Time settings and available synchronization methods can vary by model and firmware.
+
+Continue to [Verify Reader Readiness and Status](./verify-reader-readiness-and-status.mdx).

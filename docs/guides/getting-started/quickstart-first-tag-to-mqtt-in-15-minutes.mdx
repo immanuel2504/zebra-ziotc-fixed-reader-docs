@@ -1,40 +1,85 @@
 ---
 id: quickstart-first-tag-to-mqtt-in-15-minutes
-title: "Quickstart: First Tag to MQTT in 15 Minutes"
-sidebar_label: "Quickstart: First Tag to MQTT in 15 Minutes"
+title: "Quickstart: Read a Tag and Send Data through MQTT"
+sidebar_label: "Quickstart: Read a Tag and Send Data through MQTT"
 sidebar_position: 6
-description: "TODO: one-sentence summary of this topic."
-sidebar_custom_props: { emoji: "⚡", card: "TODO: one-sentence summary of this topic." }
+description: "Configure Control and Tag Data over MQTT, start inventory, and receive a tag observation."
+sidebar_custom_props: { emoji: "⚡", card: "Configure Control and Tag Data over MQTT, start inventory, and receive a tag observation." }
 doc_type: tutorial
 page_meta:
-  - "Audience: TODO"
-  - "Read time: TODO min"
+  - "Audience: Administrators and integrators"
+  - "Read time: 6 min"
 ---
 
-{/* TOC topic 2.6 | Type: Tutorial */}
+In this quickstart, you configure the reader's **Control** and **Tag Data 1** interfaces to use MQTT, start RFID inventory, and receive a tag observation in an MQTT client.
 
-{/* TODO: write the content for this topic. */}
+:::note
+Configure, preview, and publish each interface separately, even when both interfaces use the same broker.
+:::
 
-## Connect the Reader
+## Before You Begin
 
-{/* TODO */}
+- Complete the reader installation, sign in to the web console, set the regulatory region, and [verify readiness](./verify-reader-readiness-and-status.mdx).
+- Have a compatible RFID test tag and a configured antenna in the read area.
+- Have access to an MQTT broker and a client that can publish and subscribe. The reader and client must be able to reach the broker.
+- Obtain the broker's connection details, credentials, and certificates if required. Choose topics and permissions for the Control and Tag Data interfaces.
 
-## Add an MQTT Endpoint, Assign the Data Interface, and Subscribe to the Tag Data Topic
+## Step 1: Configure the Control Interface
 
-{/* TODO */}
+1. In the reader web console, open **Settings > Endpoint** and select **Control**.
+2. Set **Endpoint Type** to **MQTT** and enter the broker connection details.
+3. On the **Topic** tab, configure the Control command and response topics.
+4. Configure certificates if required, select **Preview** to review the settings, and select **Publish**.
+5. Confirm that the Control interface shows **connected**.
 
-## Configure SIMPLE Mode
+For field descriptions and screenshots, see [Connect to an MQTT Broker](../connect-the-reader/connect-to-an-mqtt-broker.mdx).
 
-{/* TODO */}
+## Step 2: Configure the Tag Data Interface
 
-## Start RFID Reading and Receive Your First Tag Event
+1. Select **Tag Data 1** and set **Endpoint Type** to **MQTT**.
+2. Enter the broker connection details and configure the Tag Data topic on the **Topic** tab.
+3. Configure certificates and batching and retention as needed.
+4. Select **Preview**, review the settings for **Tag Data 1**, and select **Publish**.
+5. Confirm that the Tag Data 1 interface shows **connected**.
 
-{/* TODO */}
+Use a different MQTT client ID for each active connection to the same broker.
 
-## Stop RFID Reading
+## Step 3: Subscribe to the Topics
 
-{/* TODO */}
+Connect your MQTT client to the broker. Subscribe to the Control response topic and the Tag Data topic **before** sending the start command. Use the topic names configured for your deployment.
 
-## Verify the Setup
+## Step 4: Start Inventory and Read a Tag
 
-{/* TODO */}
+1. Configure an RFID operating mode suitable for a basic inventory, with the intended antenna enabled. Use the reader's operating-mode documentation for your model and firmware.
+2. In your MQTT client, publish the following message to the **Control command topic**:
+
+   ```json
+   {
+     "command": "start",
+     "command_id": "quickstart-start-01",
+     "payload": {
+       "doNotPersistState": true
+     }
+   }
+   ```
+
+3. Check the Control response topic for the response with the matching `command_id` and confirm that the reader accepted the command.
+4. Present the test tag to the antenna and check the Tag Data topic for an observation.
+
+These examples use the fixed-reader [RAW MQTT command schema](https://zebradevs.github.io/rfid-ziotc-docs/_static/raw_mqtt_payloads/commands/redoc-static.html). Use a new `command_id` for each command.
+
+## Step 5: Stop Inventory
+
+Publish the following message to the same **Control command topic**:
+
+```json
+{
+  "command": "stop",
+  "command_id": "quickstart-stop-01",
+  "payload": {}
+}
+```
+
+Confirm the matching response on the Control response topic. After inventory stops, confirm that new tag observations stop arriving.
+
+If no tag observation arrives, check the antenna and operating mode, confirm both interfaces are connected, and verify that the MQTT client is subscribed to the configured Tag Data topic.
