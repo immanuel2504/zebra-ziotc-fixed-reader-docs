@@ -13,8 +13,6 @@ page_meta:
 
 Set the regulatory region for the reader's installation location and check its date and time before starting RFID operations or configuring secure connections.
 
-The MQTT command alternatives below require a configured and connected Management interface. To use the web console instead, follow the steps in each section.
-
 ## Configure the Regulatory Region
 
 1. Sign in to the reader web console.
@@ -24,7 +22,15 @@ The MQTT command alternatives below require a configured and connected Managemen
 
 If the region is already configured, verify that it matches the installation location. Use the integration guide for your reader model for the location of the setting and any model-specific requirements.
 
-**MQTT API alternative for FXR60 and FXR90:** Use [`get_supportedRegionList`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_supportedRegionList) and [`get_supportedStandardList`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_supportedStandardList) to obtain supported values, [`set_region`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_region) to set the region, and [`get_region`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_region) to verify it.
+### API Option: Configure the Regulatory Region
+
+For FXR60 and FXR90, you can configure and verify the region using MQTT commands:
+
+1. Use [`get_supportedRegionList`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_supportedRegionList) and [`get_supportedStandardList`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_supportedStandardList) to find the values supported by the reader.
+2. Use [`set_region`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_region) to configure the region using the country and standard values for the installation location.
+3. Use [`get_region`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_region) to verify the setting.
+
+These commands require a configured and connected **Management** interface.
 
 ## Configure Date and Time
 
@@ -34,6 +40,12 @@ If the region is already configured, verify that it matches the installation loc
 
 Accurate time helps the reader evaluate certificate validity for secure connections. Time settings and available synchronization methods can vary by model and firmware.
 
-**MQTT API alternative for FXR60 and FXR90:** Use [`set_timeZone`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_timeZone) and [`get_timeZone`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_timeZone) to configure and check the time zone. Where supported, use [`set_ntpServer`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_ntpServer) and [`get_ntpServer`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_ntpServer) for the time server.
+### API Option: Configure the Time Zone and Time Server
+
+For FXR60 and FXR90, with a configured and connected **Management** interface:
+
+1. Use [`set_timeZone`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_timeZone) to set the time zone and [`get_timeZone`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_timeZone) to check it.
+2. If supported by your reader and firmware, use [`set_ntpServer`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_ntpServer) to set the network time server and [`get_ntpServer`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_ntpServer) to check it.
+3. Confirm that the reader displays the correct date and time.
 
 Continue to [Verify Reader Readiness and Status](./verify-reader-readiness-and-status.mdx).

@@ -24,7 +24,6 @@ Ensure the reader can reach the cloud service. Obtain the endpoint hostname, the
 - **AWS IoT Core:** Obtain the device data endpoint for your account and Region, an active registered device certificate and its private key, and a trusted CA certificate. Attach an AWS IoT policy to the certificate that permits the required connection and topic operations. Find the device data endpoint under **Settings** in the AWS IoT Core console. See [Connect devices to AWS IoT](https://docs.aws.amazon.com/iot/latest/developerguide/iot-connect-devices.html) and [Attach a policy to a client certificate](https://docs.aws.amazon.com/iot/latest/developerguide/attach-to-cert.html).
 - **Azure IoT Hub:** Obtain the IoT hub hostname and a registered device identity with the credentials required by its configured authentication method. Check the reader and hub support the intended connection profile and topic operations. See [Use MQTT to communicate with Azure IoT Hub](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support).
 
-**MQTT API alternative for FXR60 and FXR90:** If a Management interface is already connected, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure cloud endpoints programmatically.
 
 ## Step 1: Select the Interface
 
@@ -151,3 +150,11 @@ Set up the cloud-side receiver **before** triggering a message.
 Use a cloud-side method supported by your integration to send commands and receive responses. The **connected** status confirms the connection; receiving the expected response, tag data, or event confirms the message flow.
 
 Repeat the procedure for each additional interface.
+
+## API Option: Configure a Cloud Endpoint
+
+For FXR60 and FXR90, you can configure a cloud endpoint through MQTT when a **Management** interface is already configured and connected:
+
+1. Prepare the endpoint configuration for the interface using the fields described in the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) reference.
+2. Send the `set_importCloudConfig` command through the Management interface. Review the response for errors.
+3. Check the interface connection status and verify that the receiving application gets the expected messages.

@@ -190,4 +190,10 @@ The **connected** status confirms the broker connection. Receiving the expected 
 
 To configure another interface, select it and repeat **Steps 1–7** using its broker settings.
 
-**MQTT API alternative for FXR60 and FXR90:** If a Management interface is already connected, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure MQTT endpoints programmatically.
+## API Option: Configure an MQTT Endpoint
+
+For FXR60 and FXR90, you can configure an MQTT endpoint through MQTT when a **Management** interface is already configured and connected:
+
+1. Prepare the endpoint configuration for the interface using the fields described in the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) reference.
+2. Send the `set_importCloudConfig` command through the Management interface. Review the response for errors.
+3. Check the interface connection status and verify that the receiving application gets the expected messages.

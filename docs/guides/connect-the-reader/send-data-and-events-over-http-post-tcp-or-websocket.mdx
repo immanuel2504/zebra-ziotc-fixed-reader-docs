@@ -17,7 +17,7 @@ page_meta:
 
 Configure an HTTP POST endpoint to send tag data or management events from the reader to a web server.
 
-**MQTT API alternative for FXR60 and FXR90:** If a Management interface is already connected, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure an HTTP POST endpoint programmatically.
+
 
 :::note
 Configure each interface separately, even if the interfaces use the same destination. Complete Steps 1–6 for one interface before selecting another.
@@ -149,6 +149,14 @@ Check the destination server for incoming HTTP POST requests. Trigger the applic
 | **Management Events** | Wait for or trigger an enabled event and confirm that it reaches the server. |
 
 Repeat the procedure for each additional interface.
+
+### API Option: Configure an HTTP POST Endpoint
+
+For FXR60 and FXR90, you can configure an HTTP POST endpoint through MQTT when a **Management** interface is already configured and connected:
+
+1. Prepare the endpoint configuration for the interface using the fields described in the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) reference.
+2. Send the `set_importCloudConfig` command through the Management interface. Review the response for errors.
+3. Check the interface connection status and verify that the receiving application gets the expected messages.
 
 ## TCP Server
 
