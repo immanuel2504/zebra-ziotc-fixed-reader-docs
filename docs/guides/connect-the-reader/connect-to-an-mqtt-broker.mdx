@@ -14,7 +14,7 @@ page_meta:
 Configure an MQTT connection to exchange commands, responses, tag data, or management events with the reader.
 
 :::note
-Configure each interface separately, even if the interfaces use the same broker. Complete Steps 1–7 for one interface before selecting another.
+In the web console, configure each interface separately, even if the interfaces use the same broker. Complete Steps 1–7 for one interface before selecting another.
 :::
 
 ## Before You Begin
@@ -206,9 +206,9 @@ To configure another interface, select it and repeat **Steps 1–7** using its b
 
 ## API Option: Configure an MQTT Endpoint
 
-For FXR60 and FXR90, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure an MQTT endpoint through an existing, connected **Management** interface.
+For FXR60 and FXR90, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure one or more MQTT endpoints in a single request through an existing, connected **Management** interface. Provide the connection settings separately for each interface.
 
-1. Choose the section of `endpointConfig` for the interface:
+1. Choose the `endpointConfig` sections for the interfaces you want to configure:
 
    | Interface | API configuration section |
    | --- | --- |
@@ -217,18 +217,8 @@ For FXR60 and FXR90, use [`set_importCloudConfig`](https://immanuel2504.github.i
    | **Tag Data 1 / Tag Data 2** | `data.event` |
    | **Management Events** | `management.event` |
 
-2. Prepare the connection settings, topics, and any required certificate, batching, and retention settings. Use the examples and field definitions in the command reference. For Tag Data 1 and Tag Data 2, identify the intended connection in the `data.event.connections` array.
+2. For each interface, prepare the connection settings, topics, and any required certificate, batching, and retention settings. Use the **MQTT all channels** example and field definitions in the command reference. For Tag Data 1 and Tag Data 2, identify the intended connections in the `data.event.connections` array.
 3. Send the command to the existing Management command topic and check the response on its response topic.
-4. Check the configured interface's connection status. Verify message delivery using [Step 7](#step-7-verify-communication).
+4. Check the connection status of each configured interface. Verify message delivery using [Step 7](#step-7-verify-communication).
 
 The command updates the `endpointConfig` sections included in the request; omitted sections are left unchanged. Review the connection arrays in each included section before sending, especially when a section contains multiple connections. Changing the Management endpoint used to send the command can affect the connection used to receive its response.
-
-### API Option: Configure Tag Data in One Request
-
-For FXR60 and FXR90, [`set_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_config) can configure a Tag Data connection together with its batching and retention settings:
-
-1. With a configured and connected **Management** interface, use [`get_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_config) to review the current reader configuration.
-2. Prepare a `set_config` request containing the Tag Data endpoint and the required batching and retention settings. Follow the MQTT data endpoint example in the API reference.
-3. Send the request through the Management interface and check the response. Verify the endpoint connection and tag delivery as described in [Step 7](#step-7-verify-communication).
-
-For endpoint configuration, `set_config` applies to Tag Data connections. To configure Management, Control, or Management Events endpoints, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig).
