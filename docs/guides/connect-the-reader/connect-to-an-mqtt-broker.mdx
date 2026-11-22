@@ -205,5 +205,3 @@ On FXR60 and FXR90, you can configure one or more interfaces in a single request
 
 - **MQTT:** Use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) through an already connected **Management** interface.
 - **REST:** Use [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig) with a bearer token and network access to the reader. A connected MQTT Management interface is not required.
-
-Include the settings for each interface in `endpointConfig`. See the **MQTT all channels** example in the applicable reference. Review the connection arrays before sending; omitted sections remain unchanged. Then verify each interface using [Step 7](#step-7-verify-communication).
