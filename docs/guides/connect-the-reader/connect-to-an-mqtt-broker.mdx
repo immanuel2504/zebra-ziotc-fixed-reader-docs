@@ -189,3 +189,5 @@ Connect an MQTT client to the broker configured for the selected interface. Then
 The **connected** status confirms the broker connection. Receiving the expected response, tag data, or event confirms the message flow.
 
 To configure another interface, select it and repeat **Steps 1–7** using its broker settings.
+
+**MQTT API alternative for FXR60 and FXR90:** If a Management interface is already connected, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure MQTT endpoints programmatically.

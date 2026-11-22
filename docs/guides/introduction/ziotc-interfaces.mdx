@@ -50,6 +50,8 @@ An application can send management commands through MQTT or the local REST API:
 
 **Example:** A monitoring application configures the reader's heartbeat interval through the Management interface.
 
+**MQTT API reference for FXR60 and FXR90:** Use [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status) to retrieve reader status and [`get_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_config) to retrieve the reader configuration.
+
 ## Control Interface
 
 Use the **Control** interface to start and stop RFID inventory and perform other supported RFID operations.
@@ -62,6 +64,8 @@ An application can send control commands through MQTT or the local REST API:
 - **Local REST:** The application sends a request to the reader and receives the result in the HTTP response.
 
 **Example:** A warehouse application sends a start inventory command when a shipment arrives at a dock door. The reader returns the command response through the Control interface and sends tag observations through the Data interface.
+
+**MQTT API reference for FXR60 and FXR90:** Use [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) to configure the operating mode, [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) to start reading, and [`stop`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-stop) to stop reading.
 
 ## Data Interface
 
@@ -78,6 +82,8 @@ The Data interface also provides settings for:
 
 **Example:** A reader sends tag observations to two destinations. A local application uses them to track items passing through a dock door, while a cloud application uses them for inventory reporting.
 
+**MQTT event reference for FXR60 and FXR90:** See [Tag Data Events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) for the event format.
+
 ## Management Events Interface
 
 Use the **Management Events** interface to receive information about reader health and operational status.
@@ -85,3 +91,5 @@ Use the **Management Events** interface to receive information about reader heal
 Events can include heartbeats, warnings, errors, general-purpose input (GPI) state changes, and on-reader application events. Heartbeats are sent at the configured interval; other events are sent when the corresponding condition occurs.
 
 **Example:** A monitoring application configures the heartbeat interval through the Management interface. It then receives heartbeat events through the Management Events interface.
+
+**MQTT event reference for FXR60 and FXR90:** See [Heartbeat](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat) for the event format.
