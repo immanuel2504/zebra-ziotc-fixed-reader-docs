@@ -222,3 +222,13 @@ For FXR60 and FXR90, use [`set_importCloudConfig`](https://immanuel2504.github.i
 4. Check the configured interface's connection status. Verify message delivery using [Step 7](#step-7-verify-communication).
 
 The command updates the `endpointConfig` sections included in the request; omitted sections are left unchanged. Review the connection arrays in each included section before sending, especially when a section contains multiple connections. Changing the Management endpoint used to send the command can affect the connection used to receive its response.
+
+### API Option: Configure Tag Data in One Request
+
+For FXR60 and FXR90, [`set_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_config) can configure a Tag Data connection together with its batching and retention settings:
+
+1. With a configured and connected **Management** interface, use [`get_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_config) to review the current reader configuration.
+2. Prepare a `set_config` request containing the Tag Data endpoint and the required batching and retention settings. Follow the MQTT data endpoint example in the API reference.
+3. Send the request through the Management interface and check the response. Verify the endpoint connection and tag delivery as described in [Step 7](#step-7-verify-communication).
+
+For endpoint configuration, `set_config` applies to Tag Data connections. To configure Management, Control, or Management Events endpoints, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig).
