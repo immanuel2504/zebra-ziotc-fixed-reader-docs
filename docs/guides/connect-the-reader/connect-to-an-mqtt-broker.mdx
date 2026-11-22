@@ -29,6 +29,8 @@ For each interface, obtain:
 
 Ensure that the reader can reach the broker over the network.
 
+**Using the MQTT API?** For FXR60 and FXR90, the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) command can configure an endpoint. It requires an already configured and connected **Management** interface. The API notes below identify the settings to include in the command; send the complete configuration as described in [API Option: Configure an MQTT Endpoint](#api-option-configure-an-mqtt-endpoint).
+
 ## Step 1: Select the Interface
 
 1. Sign in to the reader web console.
@@ -48,6 +50,8 @@ Ensure that the reader can reach the broker over the network.
 
 4. Set **Endpoint Type** to **MQTT**.
 5. Enter an **Endpoint Name** and **Endpoint Description**.
+
+**MQTT API:** Select the corresponding section under `endpointConfig`, and provide the connection `name`, `description`, and `type` (`mqtt`). See the interface mapping in [API Option: Configure an MQTT Endpoint](#api-option-configure-an-mqtt-endpoint).
 
 ## Step 2: Configure the Connection
 
@@ -70,6 +74,8 @@ Select the **Connections** tab and enter the settings for the broker used by the
 | **Qos** | Select the quality of service required by your application and supported by the reader. |
 
 Use the port configured on your broker. For example, MQTT over TCP commonly uses port `1883`, and MQTT over TLS commonly uses port `8883`.
+
+**MQTT API:** In the selected connection, provide the broker settings under `options.endpoint` and client settings under `options.additional`. See the `set_importCloudConfig` reference for supported fields and values.
 
 ## Step 3: Configure Topics
 
@@ -102,6 +108,8 @@ Configure the publish topic for the selected **Tag Data 1** or **Tag Data 2** in
 | Field | Purpose | Example |
 | --- | --- | --- |
 | **Publish Topic** | The reader publishes management events to this topic. | `readers/reader-01/events` |
+
+**MQTT API:** Use `subscribeTopic` for the command topic and `publishTopic` for the response or event topic. Enter the topics under the selected connection's `options`, following the API reference.
 
 ## Step 4: Configure Certificates
 
@@ -141,6 +149,8 @@ Choose how to provide the CA certificate used to validate the broker:
 
 Check the **Cert Algorithm** and **Cert Format** values against your certificate configuration. Select **Verify Server Certificate** and **Verify Host Name**.
 
+**MQTT API:** For a secure connection, include the required certificate and verification settings under the connection's `options.security`. See the installed-certificate and certificate-file examples in the `set_importCloudConfig` reference.
+
 ## Step 5: Configure Batching and Retention
 
 :::note
@@ -168,6 +178,8 @@ Under **Retention**, configure:
 | **No. of Events** | Enter the number of events to retain. |
 | **Event Retention Time (in minutes)** | Enter the event retention time. |
 
+**MQTT API:** For data connections, include the applicable `batching` and `retention` settings in the connection's `additionalOptions`. See the API reference for the supported fields.
+
 ## Step 6: Publish the Configuration
 
 1. Confirm that the correct interface is selected.
@@ -188,12 +200,25 @@ Connect an MQTT client to the broker configured for the selected interface. Then
 
 The **connected** status confirms the broker connection. Receiving the expected response, tag data, or event confirms the message flow.
 
+**MQTT API examples for FXR60 and FXR90:** To test Management, send [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status) through the Management interface. To start RFID inventory for a tag-data test, send [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) through a configured Control interface; see also the [Tag Data Events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) reference. For a Management Events test, see [Heartbeat](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat).
+
 To configure another interface, select it and repeat **Steps 1–7** using its broker settings.
 
 ## API Option: Configure an MQTT Endpoint
 
-For FXR60 and FXR90, you can configure an MQTT endpoint through MQTT when a **Management** interface is already configured and connected:
+For FXR60 and FXR90, use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to configure an MQTT endpoint through an existing, connected **Management** interface.
 
-1. Prepare the endpoint configuration for the interface using the fields described in the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) reference.
-2. Send the `set_importCloudConfig` command through the Management interface. Review the response for errors.
-3. Check the interface connection status and verify that the receiving application gets the expected messages.
+1. Choose the section of `endpointConfig` for the interface:
+
+   | Interface | API configuration section |
+   | --- | --- |
+   | **Management** | `management.commandResponse` |
+   | **Control** | `control.commandResponse` |
+   | **Tag Data 1 / Tag Data 2** | `data.event` |
+   | **Management Events** | `management.event` |
+
+2. Prepare the connection settings, topics, and any required certificate, batching, and retention settings. Use the examples and field definitions in the command reference. For Tag Data 1 and Tag Data 2, identify the intended connection in the `data.event.connections` array.
+3. Send the command to the existing Management command topic and check the response on its response topic.
+4. Check the configured interface's connection status. Verify message delivery using [Step 7](#step-7-verify-communication).
+
+The command updates the `endpointConfig` sections included in the request; omitted sections are left unchanged. Review the connection arrays in each included section before sending, especially when a section contains multiple connections. Changing the Management endpoint used to send the command can affect the connection used to receive its response.
