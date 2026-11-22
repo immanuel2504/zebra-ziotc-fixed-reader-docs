@@ -31,6 +31,8 @@ Ensure that the reader can reach the broker over the network.
 
 **Using the MQTT API?** For FXR60 and FXR90, the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) command can configure an endpoint. It requires an already configured and connected **Management** interface. The API notes below identify the settings to include in the command; send the complete configuration as described in [API Option: Configure an MQTT Endpoint](#api-option-configure-an-mqtt-endpoint).
 
+**Using the REST API?** Use [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig) to configure the endpoints. See [REST API Option: Configure MQTT Endpoints](#rest-api-option-configure-mqtt-endpoints).
+
 ## Step 1: Select the Interface
 
 1. Sign in to the reader web console.
@@ -202,6 +204,8 @@ The **connected** status confirms the broker connection. Receiving the expected 
 
 **MQTT API examples for FXR60 and FXR90:** To test Management, send [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status) through the Management interface. To start RFID inventory for a tag-data test, send [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) through a configured Control interface; see also the [Tag Data Events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) reference. For a Management Events test, see [Heartbeat](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat).
 
+**REST API examples:** Use [`GET /cloud/status`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/getStatus) to check reader status. To start RFID inventory for a tag-data test, use [`PUT /cloud/start`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/Control/startInventory).
+
 To configure another interface, select it and repeat **Steps 1–7** using its broker settings.
 
 ## API Option: Configure an MQTT Endpoint
@@ -222,3 +226,14 @@ For FXR60 and FXR90, use [`set_importCloudConfig`](https://immanuel2504.github.i
 4. Check the connection status of each configured interface. Verify message delivery using [Step 7](#step-7-verify-communication).
 
 The command updates the `endpointConfig` sections included in the request; omitted sections are left unchanged. Review the connection arrays in each included section before sending, especially when a section contains multiple connections. Changing the Management endpoint used to send the command can affect the connection used to receive its response.
+
+## REST API Option: Configure MQTT Endpoints
+
+On supported FXR readers, use [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig) to configure one or more endpoints in a single request. The REST request connects directly to the reader; it does not require a connected MQTT Management interface.
+
+1. Confirm that the REST client can reach the reader and obtain a bearer token. For authentication instructions, see **Authentication** in the [Zebra REST API reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger).
+2. Prepare a JSON request body containing `endpointConfig`. Use the interface mapping above and the **MQTT all channels** example in the REST reference. Provide connection settings separately for each interface.
+3. Send the request to `PUT /cloud/cloudConfig` with the bearer token and `Content-Type: application/json`. Review the HTTP response.
+4. Check the connection status of each configured interface and verify message delivery using [Step 7](#step-7-verify-communication).
+
+Only the `endpointConfig` sections included in the request are updated. Review the connection arrays in each included section before sending, especially when a section contains multiple connections. The REST request body follows the REST reference; MQTT command and `command_id` fields are not part of the REST request body.
