@@ -41,12 +41,16 @@ For API configuration, see [Configure Using the API](#configure-using-the-api).
 
 *Figure 1: Select an interface on the Endpoint page.*
 
-| Interface | Purpose |
+| If you want to… | Select |
 | --- | --- |
-| **Management** | Configure and administer the reader. |
-| **Control** | Control RFID operations, including starting and stopping reading. |
-| **Tag Data 1 / Tag Data 2** | Send tag observations to an application. |
-| **Management Events** | Send events such as heartbeats, GPIO events, errors, and warnings. |
+| Configure or manage the reader | [Management](../introduction/ziotc-interfaces.mdx#management-interface) |
+| Start or stop RFID inventory | [Control](../introduction/ziotc-interfaces.mdx#control-interface) |
+| Send tag observations to an application | [Tag Data 1 or Tag Data 2](../introduction/ziotc-interfaces.mdx#data-interface) |
+| Receive reader events, such as heartbeats and warnings | [Management Events](../introduction/ziotc-interfaces.mdx#management-events-interface) |
+
+**Example:** To start reading tags and send observations to an application, configure both **Control** and a **Tag Data** interface.
+
+Configure each interface your application needs separately. Each can use its own broker settings. For more information, see [ZIoTC Interfaces](../introduction/ziotc-interfaces.mdx).
 
 4. Set **Endpoint Type** to **MQTT**.
 5. Enter an **Endpoint Name** and **Endpoint Description**.
@@ -150,6 +154,8 @@ This step applies to **Tag Data 1**, **Tag Data 2**, and **Management Events**. 
 :::
 
 Select the **Batching and Retention** tab and enter the settings required for the selected interface.
+
+For an explanation of these settings, see [Batching and Retention](./overview.mdx#batching-and-retention).
 
 ![Batching and Retention tab with Tag Data 1 selected](./images/mqtt-batching-retention.png)
 
