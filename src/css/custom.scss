@@ -1813,6 +1813,20 @@ main article img:not(.no-auto-height) {
   height: auto;
 }
 
+/* Keep figure captions visually associated with centered screenshots and diagrams. */
+.markdown p.figure-caption {
+  margin: 0 auto 1.5rem;
+  color: var(--ifm-font-color-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.markdown p.figure-caption strong {
+  color: inherit;
+  font-weight: 600;
+}
+
 /* === Content image sizing: consistent visual weight across aspect ratios
    Phone screenshots (tall, narrow) sit alongside laptop screenshots
    (wide, short) and diagrams. Constrain max-height so vertical screens
