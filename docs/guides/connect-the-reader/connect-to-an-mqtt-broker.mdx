@@ -14,7 +14,7 @@ page_meta:
 Configure an MQTT connection to exchange commands, responses, tag data, or management events with the reader.
 
 :::note
-In the web console, configure each interface separately, even if the interfaces use the same broker. Complete Steps 1–7 for one interface before selecting another.
+In the web console, configure each interface separately, even if the interfaces use the same broker. Complete Steps 1–6 for each interface, then test the configured interfaces in Step 7.
 :::
 
 ## Before You Begin
@@ -179,22 +179,85 @@ Under **Retention**, configure:
 
 ## Step 7: Verify Communication
 
-Connect an MQTT client to the broker configured for the selected interface. Then perform the applicable check:
+Use MQTTX to check that the reader can exchange messages with the broker.
 
-| Interface | Verification |
+### Before You Begin
+
+- Configure and publish the interfaces you want to test.
+- Obtain the broker address, port, credentials, and topic names for each interface.
+- Confirm that your computer can reach the broker.
+- To test tag data, configure both a **Control** interface and a **Tag Data** interface.
+
+### Connect MQTTX to the Broker
+
+1. Download and install [MQTTX](https://mqttx.app/).
+2. Open MQTTX and create a new connection.
+3. Enter the broker address and port configured for the interface you want to test.
+4. Enter a unique client ID for MQTTX. Configure authentication and TLS certificates if the broker requires them.
+5. Select **Connect**.
+
+If interfaces use different brokers, create a separate MQTTX connection for each broker.
+
+### Subscribe to the Reader Topics
+
+In MQTTX, select **New Subscription** and subscribe to the topics you want to monitor:
+
+| Interface | Subscribe to |
 | --- | --- |
-| **Management** | Subscribe to the response topic. Send a supported management command to the command topic and confirm that a response arrives. |
-| **Control** | Subscribe to the response topic. Send a supported control command to the command topic, then confirm the response and resulting reader state. |
-| **Tag Data 1 / Tag Data 2** | Subscribe to the data topic. Start RFID inventory, present a tag to the reader, and confirm that tag data arrives. |
-| **Management Events** | Subscribe to the events topic and confirm that an enabled event, such as a configured heartbeat, arrives. |
+| **Management** | Management response topic |
+| **Control** | Control response topic |
+| **Tag Data 1 / Tag Data 2** | Tag Data publish topic |
+| **Management Events** | Management Events publish topic |
+
+Use the topic names configured on your reader. Subscribe through the MQTTX connection for the broker used by each interface.
+
+### Test Management
+
+Publish a supported management command to the **Management command topic**. Confirm that a response appears on the Management response topic.
+
+For example, on FXR60 and FXR90, send [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status):
+
+```json
+{
+  "command": "get_status",
+  "command_id": "test-status-01",
+  "payload": {}
+}
+```
+
+### Test Control and Tag Data
+
+1. Confirm that MQTTX is subscribed to the **Control response topic** and the **Tag Data publish topic**.
+2. Publish a supported start command to the **Control command topic**. For FXR60 and FXR90, you can use:
+
+   ```json
+   {
+     "command": "start",
+     "command_id": "test-start-01",
+     "payload": {}
+   }
+   ```
+
+3. Confirm that the command response appears on the Control response topic.
+4. Present an RFID tag to the reader and confirm that tag data appears on the Tag Data topic.
+
+The example uses the reader's configured RFID operating mode. See the [`start` command reference](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) for details.
+
+### Test Management Events
+
+1. Confirm that MQTTX is subscribed to the **Management Events publish topic**.
+2. Wait for an enabled event, such as a configured heartbeat.
+3. Confirm that the event appears in MQTTX. See the [Heartbeat reference](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat) for FXR60 and FXR90.
+
+:::note
+If Tag Data is configured for HTTP POST instead of MQTT, check the configured HTTP server for tag data.
+:::
 
 The **connected** status confirms the broker connection. Receiving the expected response, tag data, or event confirms the message flow.
 
-**MQTT API:** Use [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status) to test Management or [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) to start inventory through Control. See also [Tag Data Events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) and [Heartbeat](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat).
-
 **REST API:** Use [`GET /cloud/status`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/getStatus) to check reader status or [`PUT /cloud/start`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/Control/startInventory) to start inventory.
 
-To configure another interface, select it and repeat **Steps 1–7** using its broker settings.
+To configure another interface, select it and repeat **Steps 1–6** using its broker settings, then perform the applicable verification above.
 
 <span id="api-option-configure-an-mqtt-endpoint" />
 <span id="rest-api-option-configure-mqtt-endpoints" />
