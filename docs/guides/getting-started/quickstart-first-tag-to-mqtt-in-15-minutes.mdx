@@ -50,7 +50,7 @@ Connect your MQTT client to the broker. Subscribe to the Control response topic 
 
 ## Step 4: Start Inventory and Read a Tag
 
-1. Configure an RFID operating mode suitable for a basic inventory, with the intended antenna enabled. For FXR60 and FXR90, see the MQTT [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) and [`get_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_mode) commands.
+1. Configure an RFID operating mode suitable for a basic inventory, with the intended antenna enabled. See the MQTT [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) and [`get_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_mode) commands.
 2. In your MQTT client, publish the following message to the **Control command topic**:
 
    ```json
@@ -66,7 +66,7 @@ Connect your MQTT client to the broker. Subscribe to the Control response topic 
 3. Check the Control response topic for the response with the matching `command_id` and confirm that the reader accepted the command.
 4. Present the test tag to the antenna and check the Tag Data topic for an observation.
 
-For FXR60 and FXR90, see the MQTT [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) command and [tag data events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) reference. Use a new `command_id` for each command.
+See the MQTT [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) command and [tag data events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) reference. Use a new `command_id` for each command.
 
 ## Step 5: Stop Inventory
 
@@ -82,6 +82,6 @@ Publish the following message to the same **Control command topic**:
 
 Confirm the matching response on the Control response topic. After inventory stops, confirm that new tag observations stop arriving.
 
-For FXR60 and FXR90, see the MQTT [`stop`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-stop) command reference.
+See the MQTT [`stop`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-stop) command reference.
 
 If no tag observation arrives, check the antenna and operating mode, confirm both interfaces are connected, and verify that the MQTT client is subscribed to the configured Tag Data topic.

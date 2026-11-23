@@ -215,7 +215,7 @@ Use the topic names configured on your reader. Subscribe through the MQTTX conne
 
 Publish a supported management command to the **Management command topic**. Confirm that a response appears on the Management response topic.
 
-For example, on FXR60 and FXR90, send [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status):
+For example, send [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status):
 
 ```json
 {
@@ -228,7 +228,7 @@ For example, on FXR60 and FXR90, send [`get_status`](https://immanuel2504.github
 ### Test Control and Tag Data
 
 1. Confirm that MQTTX is subscribed to the **Control response topic** and the **Tag Data publish topic**.
-2. Publish a supported start command to the **Control command topic**. For FXR60 and FXR90, you can use:
+2. Publish a supported start command to the **Control command topic**. For example:
 
    ```json
    {
@@ -247,7 +247,7 @@ The example uses the reader's configured RFID operating mode. See the [`start` c
 
 1. Confirm that MQTTX is subscribed to the **Management Events publish topic**.
 2. Wait for an enabled event, such as a configured heartbeat.
-3. Confirm that the event appears in MQTTX. See the [Heartbeat reference](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat) for FXR60 and FXR90.
+3. Confirm that the event appears in MQTTX. See the [Heartbeat reference](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat).
 
 :::note
 If Tag Data is configured for HTTP POST instead of MQTT, check the configured HTTP server for tag data.
@@ -264,7 +264,9 @@ To configure another interface, select it and repeat **Steps 1–6** using its b
 
 ## Configure Using the API
 
-On FXR60 and FXR90, you can configure one or more interfaces in a single request:
+Use an MQTT command or the local REST API as an alternative to Steps 1–6. You can configure the broker connection, topics, and, where applicable, certificates, batching, and retention.
 
-- **MQTT:** Use [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) through an already connected **Management** interface.
-- **REST:** Use [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig) with a bearer token and network access to the reader. A connected MQTT Management interface is not required.
+- **MQTT** — If the reader's **Management** interface is already connected to a broker, send [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to the Management command topic.
+- **Local REST API** — Send the configuration directly to the reader using [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig).
+
+After applying the settings, continue to [Step 7: Verify Communication](#step-7-verify-communication).
