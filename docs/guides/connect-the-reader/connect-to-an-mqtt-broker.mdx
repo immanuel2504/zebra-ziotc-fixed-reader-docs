@@ -227,21 +227,7 @@ For example, send [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mq
 
 ### Test Control and Tag Data
 
-1. Confirm that MQTTX is subscribed to the **Control response topic** and the **Tag Data publish topic**.
-2. Publish a supported start command to the **Control command topic**. For example:
-
-   ```json
-   {
-     "command": "start",
-     "command_id": "test-start-01",
-     "payload": {}
-   }
-   ```
-
-3. Confirm that the command response appears on the Control response topic.
-4. Present an RFID tag to the reader and confirm that tag data appears on the Tag Data topic.
-
-The example uses the reader's configured RFID operating mode. See the [`start` command reference](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) for details.
+To start inventory, receive a tag observation, and stop inventory, follow [Quickstart: Read a Tag and Send Data through MQTT](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx).
 
 ### Test Management Events
 
