@@ -7,10 +7,32 @@ description: "Find a reading path for reader administrators, integrators, and ap
 sidebar_custom_props: { emoji: "🧩", card: "Find a reading path for reader administrators, integrators, and application developers." }
 doc_type: explanation
 page_meta:
-  - "Audience: TODO"
-  - "Read time: TODO min"
+  - "Audience: Administrators, integrators, and developers"
+  - "Read time: 2 min"
 ---
 
-{/* TOC topic 1.6 | Type: Concept */}
+This guide is for people who install and manage readers, connect them to applications, or develop software that uses reader data. Choose a path based on your task; you can follow more than one path.
 
-{/* TODO: write the content for this topic. */}
+## Reader Administrators and Installers
+
+Use this path to prepare, access, and check a reader:
+
+1. Review [System and Hardware Requirements](./system-and-hardware-requirements.mdx).
+2. Follow [Getting Started](../getting-started/index.mdx) to install and access the reader.
+3. [Verify reader readiness and status](../getting-started/verify-reader-readiness-and-status.mdx).
+
+## Solution Integrators
+
+Use this path to connect a reader to a local or cloud destination:
+
+1. Review [Deployment Models](./deployment-models.mdx) and [ZIoTC Interfaces](./ziotc-interfaces.mdx).
+2. Configure a connection to an [MQTT broker](../connect-the-reader/connect-to-an-mqtt-broker.mdx), [AWS IoT Core or Azure IoT Hub](../connect-the-reader/connect-to-aws-iot-core.mdx), or an [HTTP POST endpoint](../connect-the-reader/send-data-and-events-over-http-post-tcp-or-websocket.mdx#http-post).
+3. For tag delivery over MQTT, follow the [Quickstart](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx).
+
+## Application Developers
+
+Use this path to send commands and receive reader messages:
+
+1. Review [ZIoTC Interfaces](./ziotc-interfaces.mdx) to understand management, control, data, and events.
+2. Follow the [MQTT Quickstart](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx) to start inventory and receive a tag observation.
+3. Use the [MQTT API reference](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html) or the [REST API reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger) for command and endpoint details.
