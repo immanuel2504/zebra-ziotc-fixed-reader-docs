@@ -82,7 +82,7 @@ If you also configured the **Management** interface for MQTT, you can verify it 
 }
 ```
 
-The example response is shortened. Version values and other fields depend on the reader. See the [`get_version` reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version). You can continue without this optional Management check.
+The example response is shortened. Version values and other fields depend on the reader. See the [`get_version` reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version). You can continue without this optional Management check.
 
 ## Step 4: Start Inventory and Read a Tag
 
@@ -140,7 +140,7 @@ To check the configured mode, publish `get_mode` to the **Control command topic*
 }
 ```
 
-The actual response can include additional settings. Confirm that the mode and antenna configuration are suitable before starting inventory. See the MQTT [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) and [`get_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_mode) references.
+The actual response can include additional settings. Confirm that the mode and antenna configuration are suitable before starting inventory. See the MQTT [`set_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_mode) and [`get_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_mode) references.
 
 ### Start Inventory
 
@@ -186,7 +186,7 @@ Present the test tag to the antenna and check the subscribed **Tag Data topic**.
 
 The tag identifier (`idHex`), timestamp, and other fields vary by tag and reader configuration.
 
-See the MQTT [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) command and [tag data events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) reference. Use a new `command_id` for each command.
+See the MQTT [`start`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) command and [tag data events](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-tagDataEvents) reference. Use a new `command_id` for each command.
 
 ## Step 5: Stop Inventory
 
@@ -213,6 +213,6 @@ Check the Control response topic for the matching `command_id`. For example:
 
 After inventory stops, confirm that new tag observations stop arriving. If a response is `failure`, check its payload for error details.
 
-See the MQTT [`stop`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-stop) command reference.
+See the MQTT [`stop`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) command reference.
 
 If no tag observation arrives, check the antenna and operating mode, confirm both interfaces are connected, and verify that the MQTT client is subscribed to the configured Tag Data topic.

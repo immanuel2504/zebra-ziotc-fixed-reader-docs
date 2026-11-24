@@ -26,9 +26,9 @@ If the region is already configured, verify that it matches the installation loc
 
 You can configure and verify the region using MQTT commands:
 
-1. Use [`get_supportedRegionList`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_supportedRegionList) and [`get_supportedStandardList`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_supportedStandardList) to find the values supported by the reader.
-2. Use [`set_region`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_region) to configure the region using the country and standard values for the installation location.
-3. Use [`get_region`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_region) to verify the setting.
+1. Use [`get_supportedRegionList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_supportedRegionList) and [`get_supportedStandardList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_supportedStandardList) to find the values supported by the reader.
+2. Use [`set_region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_region) to configure the region using the country and standard values for the installation location.
+3. Use [`get_region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_region) to verify the setting.
 
 These commands require a configured and connected **Management** interface.
 
@@ -44,8 +44,8 @@ Accurate time helps the reader evaluate certificate validity for secure connecti
 
 With a configured and connected **Management** interface:
 
-1. Use [`set_timeZone`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_timeZone) to set the time zone and [`get_timeZone`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_timeZone) to check it.
-2. If supported by your reader and firmware, use [`set_ntpServer`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_ntpServer) to set the network time server and [`get_ntpServer`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_ntpServer) to check it.
+1. Use [`set_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_timeZone) to set the time zone and [`get_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_timeZone) to check it.
+2. If supported by your reader and firmware, use [`set_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_ntpServer) to set the network time server and [`get_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_ntpServer) to check it.
 3. Confirm that the reader displays the correct date and time.
 
 Continue to [Verify Reader Readiness and Status](./verify-reader-readiness-and-status.mdx).

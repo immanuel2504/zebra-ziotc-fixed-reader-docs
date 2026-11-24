@@ -66,6 +66,6 @@ Choose values that suit the event volume and expected length of a connection int
 
 With a configured and connected **Management** interface:
 
-1. Prepare the endpoint configuration, including the applicable batching and retention settings, using the [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) reference.
+1. Prepare the endpoint configuration, including the applicable batching and retention settings, using the [`set_importCloudConfig`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_importCloudConfig) reference.
 2. Send `set_importCloudConfig` through the Management interface and review the response for errors.
-3. Use [`get_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_config) to inspect the reader configuration, and verify that the receiving application gets the expected events.
+3. Use [`get_config`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_config) to inspect the reader configuration, and verify that the receiving application gets the expected events.

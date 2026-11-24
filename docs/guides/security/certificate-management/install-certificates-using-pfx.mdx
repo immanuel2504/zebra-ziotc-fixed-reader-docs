@@ -92,7 +92,7 @@ Installing a client PFX does not necessarily add its bundled CA certificate to t
 
 As an alternative to the web console, install the certificate using MQTT or the local REST API. The reader must be able to access the PFX file URL.
 
-- **MQTT** — If the Management interface is connected to a broker, send [`set_updateCertificate`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_update_cert) to the Management command topic.
-- **Local REST API** — Send [`PUT /cloud/certificates`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/Certificate/setUpdatecertificate) directly to the reader.
+- **MQTT** — If the Management interface is connected to a broker, send [`set_updateCertificate`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_update_cert) to the Management command topic.
+- **Local REST API** — Send [`PUT /cloud/certificates`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Certificate/setUpdatecertificate) directly to the reader.
 
 See the applicable reference for request details. After installation, verify the certificate as described in Step 4.

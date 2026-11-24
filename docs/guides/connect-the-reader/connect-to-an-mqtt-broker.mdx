@@ -317,7 +317,7 @@ If you configured **Management**, use the following example to request reader ve
    }
    ```
 
-   This is a shortened example; the version values and other fields depend on the reader. See the [`get_version` reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version).
+   This is a shortened example; the version values and other fields depend on the reader. See the [`get_version` reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version).
 
 ### Start RFID Inventory (Control)
 
@@ -387,7 +387,7 @@ When you have finished reading tags, publish the following request to the Contro
 }
 ```
 
-Use a new `command_id` for each request and match it to the response. If the response is `failure`, check its payload for error details. See the [`start`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) and [`stop`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) references.
+Use a new `command_id` for each request and match it to the response. If the response is `failure`, check its payload for error details. See the [`start`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) and [`stop`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) references.
 
 ### Verify Management Events
 
@@ -404,8 +404,8 @@ Use an MQTT command or the local REST API as an alternative to Steps 1–6. You 
 
 | API | Configuration Method |
 | --- | --- |
-| **Local REST API** | Send the configuration directly to the reader using [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig). |
-| **MQTT** | Send [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) with the endpoint configuration to the Management command topic. |
+| **Local REST API** | Send the configuration directly to the reader using [`PUT /cloud/cloudConfig`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/System/setImportcloudconfig). |
+| **MQTT** | Send [`set_importCloudConfig`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_importCloudConfig) with the endpoint configuration to the Management command topic. |
 
 :::note
 To configure endpoints using MQTT, the reader's **Management** interface must already be connected to an MQTT broker.
