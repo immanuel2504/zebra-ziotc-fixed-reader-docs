@@ -235,9 +235,22 @@ const sidebars = {
       link: { type: 'doc', id: 'guides/security/index' },
       items: [
         'guides/security/security-overview',
-        'guides/security/install-and-manage-certificates',
+        {
+          type: 'category',
+          label: 'Certificate Management',
+          collapsible: true,
+          collapsed: true,
+          link: { type: 'doc', id: 'guides/security/certificate-management/index' },
+          items: [
+            'guides/security/certificate-management/certificate-overview',
+            'guides/security/certificate-management/generate-certificates',
+            'guides/security/certificate-management/install-certificates-using-pfx',
+            'guides/security/certificate-management/transfer-certificate-files-using-scp',
+            'guides/security/certificate-management/manage-trusted-ca-certificates',
+            'guides/security/certificate-management/view-and-delete-certificates',
+          ],
+        },
         'guides/security/secure-reader-access-and-credentials',
-        'guides/security/secure-network-mqtt-and-rest-connections',
       ],
     },
     {
