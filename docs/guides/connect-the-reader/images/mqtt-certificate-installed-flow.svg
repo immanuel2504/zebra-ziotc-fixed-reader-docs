@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+  <title id="title">Use Installed Certificates</title>
+  <desc id="desc">Install a PFX package on the reader, then select the installed certificate in the endpoint settings.</desc>
+  <defs>
+    <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#1d67c8"/></marker>
+    <style>text{font-family:Segoe UI,Arial,sans-serif;fill:#14243d}.title{font-size:42px;font-weight:700}.subtitle{font-size:22px;fill:#566b85}.heading{font-size:29px;font-weight:700}.small{font-size:20px;fill:#425776}.card{stroke-width:2.5}.path{fill:none;stroke:#1d67c8;stroke-width:4;stroke-linecap:round}</style>
+  </defs>
+  <rect width="1200" height="850" fill="#fff"/>
+  <text x="600" y="66" class="title" text-anchor="middle">Use Installed Certificates</text>
+  <text x="600" y="105" class="subtitle" text-anchor="middle">Select a client certificate installed on the reader</text>
+
+  <rect x="120" y="155" width="960" height="150" rx="16" fill="#e4f6df" stroke="#39a34a" class="card"/>
+  <text x="600" y="215" class="heading" text-anchor="middle">PFX package</text>
+  <text x="600" y="255" class="small" text-anchor="middle">Install using the reader web console</text>
+  <path d="M600 305 V360" class="path" marker-end="url(#blue)"/>
+
+  <rect x="120" y="360" width="960" height="150" rx="16" fill="#e1efff" stroke="#4187e2" class="card"/>
+  <text x="600" y="420" class="heading" text-anchor="middle">Installed credentials</text>
+  <text x="600" y="460" class="small" text-anchor="middle">Certificate and private key stored on the reader</text>
+  <path d="M600 510 V565" class="path" marker-end="url(#blue)"/>
+
+  <rect x="120" y="565" width="960" height="150" rx="16" fill="#f1e8ff" stroke="#8a5ad2" class="card"/>
+  <text x="600" y="625" class="heading" text-anchor="middle">Endpoint certificate settings</text>
+  <text x="600" y="665" class="small" text-anchor="middle">Select Use Installed Certs and choose the certificate</text>
+  <text x="600" y="790" class="small" text-anchor="middle">The certificate must already be installed before it can be selected.</text>
+</svg>

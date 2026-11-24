@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+  <title id="title">MQTT Communication</title>
+  <desc id="desc">A reader exchanges management and control commands and responses through an MQTT broker. Tag observations and management events travel from the reader through the broker to an application. Each interface is configured separately.</desc>
+  <defs>
+    <marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#16854a"/></marker>
+    <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#1d67c8"/></marker>
+    <marker id="orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#d96811"/></marker>
+    <marker id="purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#7142b9"/></marker>
+    <style>
+      text{font-family:Segoe UI,Arial,sans-serif;fill:#14243d}.title{font-size:46px;font-weight:700}.subtitle{font-size:22px;fill:#566b85}.heading{font-size:29px;font-weight:700}.small{font-size:20px;fill:#425776}.section{font-size:24px;font-weight:700;fill:#425776}.label{font-size:19px;font-weight:600;fill:#425776}.card{stroke-width:2.5}.path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+  <rect width="1600" height="1200" fill="#fff"/>
+  <text x="800" y="68" class="title" text-anchor="middle">MQTT Communication</text>
+  <text x="800" y="108" class="subtitle" text-anchor="middle">How reader interfaces exchange messages with an application</text>
+
+  <rect x="180" y="155" width="1240" height="112" rx="16" fill="#e5f1ff" stroke="#2d6ccc" class="card"/>
+  <path d="M602 214 a17 17 0 0 1 14 -28 a24 24 0 0 1 45 6 a14 14 0 0 1 1 28 h-58 a14 14 0 0 1 -2 -6" transform="translate(-90 0)" fill="none" stroke="#1d67c8" stroke-width="4"/>
+  <text x="830" y="202" class="heading" text-anchor="middle">Application</text>
+  <text x="830" y="236" class="small" text-anchor="middle">Publishes commands and receives messages</text>
+
+  <path d="M245 267 V410" class="path" stroke="#16854a" marker-start="url(#green)" marker-end="url(#green)"/>
+  <path d="M615 267 V410" class="path" stroke="#1d67c8" marker-start="url(#blue)" marker-end="url(#blue)"/>
+  <path d="M985 410 V267" class="path" stroke="#d96811" marker-end="url(#orange)"/>
+  <path d="M1355 410 V267" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#purple)"/>
+
+  <rect x="180" y="410" width="1240" height="120" rx="16" fill="#f1eaff" stroke="#8152c6" class="card"/>
+  <g transform="translate(-90 0)">
+    <rect x="595" y="439" width="54" height="20" rx="4" fill="none" stroke="#7142b9" stroke-width="3"/>
+    <rect x="595" y="467" width="54" height="20" rx="4" fill="none" stroke="#7142b9" stroke-width="3"/>
+    <circle cx="638" cy="449" r="2.5" fill="#7142b9"/><circle cx="638" cy="477" r="2.5" fill="#7142b9"/>
+  </g>
+  <text x="830" y="457" class="heading" text-anchor="middle">MQTT Broker</text>
+  <text x="830" y="492" class="small" text-anchor="middle">Routes messages using configured topics</text>
+
+  <rect x="55" y="700" width="1490" height="260" rx="20" fill="#f5f8fc" stroke="#a5b5cb" stroke-width="2.5" stroke-dasharray="12 8"/>
+  <text x="800" y="741" class="section" text-anchor="middle">Zebra fixed RFID reader</text>
+  <path d="M245 530 V798" class="path" stroke="#16854a" marker-start="url(#green)" marker-end="url(#green)"/>
+  <path d="M615 530 V798" class="path" stroke="#1d67c8" marker-start="url(#blue)" marker-end="url(#blue)"/>
+  <path d="M985 798 V530" class="path" stroke="#d96811" marker-end="url(#orange)"/>
+  <path d="M1355 798 V530" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#purple)"/>
+
+  <rect x="127" y="590" width="236" height="59" rx="9" fill="#fff"/>
+  <text x="245" y="614" class="label" text-anchor="middle">Management commands</text><text x="245" y="640" class="label" text-anchor="middle">and responses</text>
+  <rect x="497" y="590" width="236" height="59" rx="9" fill="#fff"/>
+  <text x="615" y="614" class="label" text-anchor="middle">Control commands</text><text x="615" y="640" class="label" text-anchor="middle">and responses</text>
+  <rect x="870" y="590" width="230" height="59" rx="9" fill="#fff"/>
+  <text x="985" y="614" class="label" text-anchor="middle">Tag observations</text><text x="985" y="640" class="label" text-anchor="middle">and supported BLE data</text>
+  <rect x="1260" y="590" width="190" height="59" rx="9" fill="#fff"/>
+  <text x="1355" y="629" class="label" text-anchor="middle">Reader events</text>
+
+  <rect x="85" y="798" width="320" height="125" rx="15" fill="#e4f6df" stroke="#39a34a" class="card"/>
+  <text x="245" y="847" class="heading" text-anchor="middle">Management</text><text x="245" y="882" class="small" text-anchor="middle">Configure and manage</text>
+  <rect x="455" y="798" width="320" height="125" rx="15" fill="#e1efff" stroke="#4187e2" class="card"/>
+  <text x="615" y="847" class="heading" text-anchor="middle">Control</text><text x="615" y="882" class="small" text-anchor="middle">Start and stop operations</text>
+  <rect x="825" y="798" width="320" height="125" rx="15" fill="#fff0df" stroke="#e67b1c" class="card"/>
+  <text x="985" y="847" class="heading" text-anchor="middle">Tag Data</text><text x="985" y="882" class="small" text-anchor="middle">Send observations</text>
+  <rect x="1195" y="798" width="320" height="125" rx="15" fill="#f1e8ff" stroke="#8a5ad2" class="card"/>
+  <text x="1355" y="847" class="heading" text-anchor="middle">Management Events</text><text x="1355" y="882" class="small" text-anchor="middle">Send reader events</text>
+
+  <rect x="250" y="1000" width="1100" height="112" rx="14" fill="#fff" stroke="#d4deea" stroke-width="2"/>
+  <text x="280" y="1039" class="section">Message flow</text>
+  <path d="M290 1068 H350" class="path" stroke="#1d67c8" marker-start="url(#blue)" marker-end="url(#blue)"/>
+  <text x="365" y="1075" class="small">Commands and responses</text>
+  <path d="M665 1068 H725" class="path" stroke="#d96811" marker-end="url(#orange)"/>
+  <text x="740" y="1075" class="small">Tag and BLE data</text>
+  <path d="M990 1068 H1050" class="path" stroke="#7142b9" stroke-dasharray="10 7" marker-end="url(#purple)"/>
+  <text x="1065" y="1075" class="small">Reader events</text>
+  <text x="800" y="1165" class="small" text-anchor="middle">Each interface is configured separately and can use the same or a different broker.</text>
+</svg>

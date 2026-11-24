@@ -11,13 +11,22 @@ page_meta:
   - "Read time: 10 min"
 ---
 
+import MqttDiagram from './images/mqtt-communication.png';
+
 Configure an MQTT connection to exchange commands, responses, tag observations, and management events between the reader and applications through an MQTT broker.
 
-![Diagram of reader interfaces communicating with an application through an MQTT broker over TCP or TLS](./images/mqtt-communication.png)
+<a href={MqttDiagram} aria-label="Open the MQTT communication illustration at full size">
+  <img
+    src={MqttDiagram}
+    className="no-auto-height"
+    style={{width: '100%', height: 'auto'}}
+    alt="Management and Control exchange commands and responses through an MQTT broker. Tag Data and Management Events send observations and events through the broker to an application."
+  />
+</a>
 
-<p className="figure-caption"><strong>Figure 1:</strong> Example MQTT communication between the reader, broker, and application.</p>
+<p className="figure-caption"><strong>Figure 1:</strong> Example MQTT communication between the reader, broker, and application. <a href={MqttDiagram}>View full size</a>.</p>
 
-The illustration shows MQTT over TCP or TLS. Other transport options are described in [Step 2](#step-2-configure-the-connection).
+Transport options are described in [Step 2](#step-2-configure-the-connection).
 
 :::note
 In the web console, configure each interface separately, even if the interfaces use the same broker. Complete Steps 1–6 for each interface, then test the configured interfaces in Step 7.
@@ -164,7 +173,7 @@ Use this option if the client certificate and private key are available as indiv
 
 <p className="figure-caption"><strong>Figure 6:</strong> Using certificate file paths.</p>
 
-The diagram shows SCP as an example transfer method. Use a transfer method supported by your reader and the file paths available on it.
+For example, SCP can be used where supported. Use the file paths available on your reader.
 
 1. Clear **Use Installed Certs**.
 2. In **Certificate Path**, enter the absolute path to the client certificate.
