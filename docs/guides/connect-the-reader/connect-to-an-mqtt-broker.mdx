@@ -45,11 +45,17 @@ For a secure connection, make the trusted CA certificate available to the reader
 
 To verify communication, have a compatible MQTT client available. For API configuration, see [Configure Using the API](#configure-using-the-api).
 
+Select a screenshot to enlarge it.
+
 ## Step 1: Select the Interface
 
 1. Sign in to the reader web console.
 2. Go to **Settings > Endpoint**.
 3. Select the interface you want to configure.
+
+![Illustration of the Endpoint page with Management selected and Endpoint Type set to none](./images/mqtt-endpoint-none-generated.png)
+
+<p className="figure-caption"><strong>Figure 2:</strong> Illustration of the Endpoint page before selecting MQTT.</p>
 
 | If you want to… | Select |
 | --- | --- |
@@ -61,10 +67,6 @@ To verify communication, have a compatible MQTT client available. For API config
 4. Set **Endpoint Type** to **MQTT**.
 5. Enter an **Endpoint Name** and **Endpoint Description**.
 
-![Endpoint page with the Management interface selected](./images/mqtt-select-interface.png)
-
-<p className="figure-caption"><strong>Figure 2:</strong> Select an interface on the Endpoint page.</p>
-
 **Example:** To start reading tags and send observations to an application, configure both **Control** and a **Tag Data** interface. For more information, see [ZIoTC Interfaces](../introduction/ziotc-interfaces.mdx).
 
 ## Step 2: Configure the Connection
@@ -72,7 +74,7 @@ To verify communication, have a compatible MQTT client available. For API config
 1. Select the **Connections** tab.
 2. Enter the broker and MQTT session settings for the selected interface.
 
-![MQTT Connections tab with Control selected](./images/mqtt-connection.png)
+![MQTT Connections tab with Management selected](./images/mqtt-connection-clear.png)
 
 <p className="figure-caption"><strong>Figure 3:</strong> MQTT connection settings for the selected interface.</p>
 
@@ -105,6 +107,10 @@ Use the port configured on your broker. If you select **TLS** or **Secure WebSoc
 
 1. Select the **Topic** tab.
 2. Enter the topics for the selected interface. Management and Control use command and response topics; Tag Data and Management Events use publish topics.
+
+![Management interface Topic tab showing command and response topic fields](./images/mqtt-management-topic-clear.png)
+
+<p className="figure-caption"><strong>Figure 4:</strong> Management command and response topic settings.</p>
 
 The examples are illustrative. Use the topic names required by your application and ensure the reader has the necessary broker permissions.
 
@@ -158,14 +164,14 @@ For PFX installation, see [Install Certificates Using PFX](../security/certifica
 
 ![A PFX package is installed, then the installed certificate is selected in the endpoint settings](./images/mqtt-certificate-installed-flow.png)
 
-<p className="figure-caption"><strong>Figure 4:</strong> Using an installed certificate.</p>
+<p className="figure-caption"><strong>Figure 5:</strong> Using an installed certificate.</p>
 
 1. Select **Use Installed Certs**.
 2. In the **Certificate** list, select the required certificate.
 
-![Certificates tab with Use Installed Certs selected](./images/mqtt-installed-certificates.png)
+![Certificates tab with Use Installed Certs selected](./images/mqtt-installed-certificates-clear.png)
 
-<p className="figure-caption"><strong>Figure 5:</strong> Certificate settings using installed certificates.</p>
+<p className="figure-caption"><strong>Figure 6:</strong> Certificate settings using installed certificates.</p>
 
 #### Option B: Use Certificate File Paths
 
@@ -173,7 +179,7 @@ Use this option if the client certificate and private key are available as indiv
 
 ![Certificate and private key files are transferred to the reader and their paths are entered in the endpoint settings](./images/mqtt-certificate-file-flow.png)
 
-<p className="figure-caption"><strong>Figure 6:</strong> Using certificate file paths.</p>
+<p className="figure-caption"><strong>Figure 7:</strong> Using certificate file paths.</p>
 
 For example, SCP can be used where supported. Use the file paths available on your reader.
 
@@ -183,9 +189,9 @@ For file transfer, see [Transfer Certificate Files Using SCP](../security/certif
 2. In **Certificate Path**, enter the absolute path to the client certificate.
 3. In **Private Key Path**, enter the absolute path to the corresponding private key.
 
-![Certificates tab showing certificate and private key path fields](./images/mqtt-certificate-paths.png)
+![Illustration of the Certificates tab with Use Installed Certs cleared and certificate file path fields visible](./images/mqtt-certificate-paths-generated-v2.png)
 
-<p className="figure-caption"><strong>Figure 7:</strong> Certificate settings using file paths.</p>
+<p className="figure-caption"><strong>Figure 8:</strong> Illustration of certificate settings using file paths.</p>
 
 The paths must refer to files accessible to the reader, not files on your computer.
 
@@ -212,9 +218,9 @@ This step applies to **Tag Data 1**, **Tag Data 2**, and **Management Events**. 
 
 Select the **Batching and Retention** tab and enter the settings required for the selected interface. For an explanation, see [Batching and Retention](./overview.mdx#batching-and-retention).
 
-![Batching and Retention tab with Tag Data 1 selected](./images/mqtt-batching-retention.png)
+![Batching and Retention tab with Tag Data 1 selected](./images/mqtt-batching-retention-clear.png)
 
-<p className="figure-caption"><strong>Figure 8:</strong> Batching and retention settings for Tag Data 1.</p>
+<p className="figure-caption"><strong>Figure 9:</strong> Batching and retention settings for Tag Data 1.</p>
 
 ### Configure Batching
 
@@ -246,6 +252,10 @@ Choose values based on your application's event volume and latency requirements 
 3. Select **Publish** to apply the configuration.
 4. Verify that the selected interface shows **connected**.
 
+![Endpoint page showing Preview, Publish, and the connection status](./images/mqtt-preview-publish-clear.png)
+
+<p className="figure-caption"><strong>Figure 10:</strong> Preview and publish controls and connection status.</p>
+
 If it does not connect, check the broker address and port, network access, credentials, and any certificate settings.
 
 ## Step 7: Verify Communication
@@ -265,6 +275,10 @@ If interfaces use different brokers, create a separate MQTTX connection for each
 1. Select **New Subscription**.
 2. Enter the response or publish topic configured for the selected interface in Step 3.
 3. Confirm the subscription.
+
+![MQTTX New Subscription dialog showing an example topic](https://mqttx.app/images/mqttx-topic.png)
+
+<p className="figure-caption"><strong>Figure 11:</strong> MQTTX subscription dialog with an example topic. Source: <a href="https://mqttx.app/docs/get-started">MQTTX documentation</a>.</p>
 
 ### Publish a Command and Verify the Response
 
