@@ -15,7 +15,7 @@ import InterfacesDiagram from './images/ziotc-interfaces.png';
 
 Zebra IoT Connector (ZIoTC) provides four types of interfaces that enable applications to configure and manage the reader, control RFID operations, and receive tag observations and reader events.
 
-Each interface can be configured independently to communicate with its own supported endpoint.
+Each interface can be configured independently to communicate with its own supported endpoint, allowing applications to integrate with the reader in cloud, on-premises, or hybrid deployments.
 
 <a href={InterfacesDiagram} aria-label="Open the interfaces diagram at full size">
   <img
@@ -26,16 +26,20 @@ Each interface can be configured independently to communicate with its own suppo
   />
 </a>
 
-<p className="figure-caption"><strong>Figure 1:</strong> Communication through the ZIoTC interfaces.</p>
+<p className="figure-caption"><strong>Figure 1:</strong> Communication between external applications and the reader through ZIoTC interfaces.</p>
 
 ## Interface Overview
 
-| Interface | Purpose | Communication Model |
-|---|---|---|
-| **Management** | Configure and administer the reader. | Command and response |
-| **Control** | Control RFID operations. | Command and response |
-| **Data** | Deliver RFID tag observations and supported BLE scan data. | Asynchronous data delivery |
-| **Management Events** | Report reader health and operational events. | Asynchronous event delivery |
+The following table describes the purpose, communication model, and supported communication methods for each interface.
+
+| Interface | Purpose | Communication Model | Communication Methods |
+|---|---|---|---|
+| **Management** | Configure and administer the reader. | Command and response | MQTT, Local REST API |
+| **Control** | Control RFID operations. | Command and response | MQTT, Local REST API |
+| **Data** | Deliver tag observations and supported BLE scan data. | Asynchronous data delivery | MQTT, HTTP POST |
+| **Management Events** | Report reader health and operational events. | Asynchronous event delivery | MQTT, HTTP POST |
+
+Available communication methods depend on the reader model, firmware, and supported endpoint types.
 
 ## Management Interface
 
@@ -50,6 +54,8 @@ Typical operations include:
 - Configuring heartbeat and event reporting settings.
 - Configuring communication endpoints.
 
+The application sends a management command or request, and the reader returns the corresponding response.
+
 ## Control Interface
 
 The Control interface enables applications to control RFID operations and configure how the reader interacts with RFID tags.
@@ -61,7 +67,7 @@ Typical operations include:
 - Configuring tag reading behavior.
 - Performing supported tag memory operations.
 
-Command responses are returned through the Control interface, while tag observations generated during RFID operations are delivered through the Data interface.
+The application sends a control command or request, and the reader returns the corresponding response. Tag observations generated during RFID operations are delivered separately through the Data interface.
 
 ## Data Interface
 
@@ -76,8 +82,10 @@ A tag observation can include information such as:
 
 The reader provides two configurable data interfaces:
 
-- **Tag Data 1**
-- **Tag Data 2**
+| Interface | Purpose |
+|---|---|
+| **Tag Data 1** | Delivers observations to the first configured data endpoint. |
+| **Tag Data 2** | Delivers observations to the second configured data endpoint. |
 
 Both interfaces can be configured independently to deliver observations to the same or different destinations.
 
@@ -87,12 +95,14 @@ The Management Events interface enables applications to monitor the reader's hea
 
 Supported events can include:
 
-- Heartbeats.
-- General-purpose input (GPI) state changes.
+- Heartbeats containing reader health information.
+- General-purpose input/output (GPIO) events.
 - Warnings and errors.
 - On-reader application events.
 
-Heartbeats are generated at the configured interval. Other events are generated when the corresponding condition occurs.
+Unlike the Management interface, which returns responses to requests, the Management Events interface sends events asynchronously without requiring an individual request from the application.
+
+Event reporting settings, such as heartbeat intervals and supported warning thresholds, can be configured through the Management interface.
 
 ## Interface Communication
 
@@ -104,7 +114,7 @@ The Management and Control interfaces use command-response communication.
 
 | Communication Method | Description |
 |---|---|
-| **MQTT** | The application publishes a command to the configured command topic and receives the response on the configured response topic. |
+| **MQTT** | The application publishes a command to the configured command topic. The reader processes the command and publishes the response to the configured response topic. |
 | **Local REST API** | The application sends an HTTP request to the reader and receives the result in the HTTP response. |
 
 {/* Command-response communication illustration requested for this section. */}
@@ -118,27 +128,25 @@ The Data and Management Events interfaces deliver observations and events withou
 | **MQTT** | The reader publishes observations or events to a configured topic. Applications subscribe to the topic to receive messages. |
 | **HTTP POST** | The reader sends observations or events to a configured HTTP endpoint. |
 
-Available communication methods depend on the reader model and firmware.
-
 {/* Asynchronous communication illustration requested for this section. */}
 
 ## How the Interfaces Work Together
 
-Consider a fixed RFID reader installed at a warehouse dock door to track incoming shipments.
+Consider a warehouse application that uses a fixed RFID reader installed at a dock door to track incoming shipments.
 
-1. The application uses the **Management** interface to configure the reader, communication endpoints, and heartbeat settings.
+1. The application uses the **Management** interface to configure the reader, data endpoints, and heartbeat settings.
 2. The application uses the **Control** interface to configure the operating mode and start RFID inventory.
 3. As tagged items pass through the dock door, the reader delivers tag observations through the **Data** interface.
-4. The reader reports heartbeats, warnings, and errors through the **Management Events** interface.
+4. The reader reports health information, heartbeats, warnings, and errors through the **Management Events** interface.
 5. When the operation is complete, the application uses the **Control** interface to stop RFID inventory.
-
-Reader health monitoring can continue independently of RFID inventory operations.
 
 {/* Warehouse interface workflow illustration requested for this section. */}
 
 ## API References
 
-For supported commands, request and response schemas, and event formats, see the following references:
+For supported commands, request and response schemas, and event formats, see the following references.
 
-- [MQTT API Reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/)
-- [REST API Reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger)
+| API | Reference |
+|---|---|
+| **MQTT** | [MQTT API Reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/) |
+| **REST** | [REST API Reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger) |
