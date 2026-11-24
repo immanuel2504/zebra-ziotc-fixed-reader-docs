@@ -13,11 +13,9 @@ page_meta:
 
 import InterfacesDiagram from './images/ziotc-interfaces.png';
 
-Zebra IoT Connector (ZIoTC) provides four interfaces for communication between a fixed RFID reader and applications.
+Zebra IoT Connector (ZIoTC) provides four types of interfaces that enable applications to configure and manage the reader, control RFID operations, and receive tag observations and reader events.
 
-Applications use the **Management** and **Control** interfaces to send commands and receive responses. The reader uses the **Data** and **Management Events** interfaces to send observations and events to configured endpoints.
-
-Each interface is configured separately and can use its own supported endpoint.
+Each interface can be configured independently to communicate with its own supported endpoint.
 
 <a href={InterfacesDiagram} aria-label="Open the interfaces diagram at full size">
   <img
@@ -30,66 +28,117 @@ Each interface is configured separately and can use its own supported endpoint.
 
 <p className="figure-caption"><strong>Figure 1:</strong> Communication through the ZIoTC interfaces.</p>
 
-| Interface | Purpose | Communication |
-| --- | --- | --- |
-| **Management** | Configure and maintain the reader. | The application sends a request, and the reader returns a response. |
-| **Control** | Control RFID operations, including starting and stopping inventory. | The application sends a request, and the reader returns a response. |
-| **Data** | Deliver RFID tag observations and supported BLE scan data. | The reader sends observations to configured data endpoints. |
-| **Management Events** | Report reader health and operational events. | The reader sends events to a configured endpoint. |
+## Interface Overview
+
+| Interface | Purpose | Communication Model |
+|---|---|---|
+| **Management** | Configure and administer the reader. | Command and response |
+| **Control** | Control RFID operations. | Command and response |
+| **Data** | Deliver RFID tag observations and supported BLE scan data. | Asynchronous data delivery |
+| **Management Events** | Report reader health and operational events. | Asynchronous event delivery |
 
 ## Management Interface
 
-Use the **Management** interface to configure, administer, and monitor the reader.
+The Management interface enables applications to configure, administer, and monitor the reader.
 
-Management operations include configuring network and time settings, managing certificates, retrieving reader information, and updating firmware.
+Typical operations include:
 
-An application can send management commands through MQTT or the local REST API:
-
-- **MQTT:** The application publishes a command to the configured command topic and receives the response on the configured response topic.
-- **Local REST:** The application sends a request to the reader and receives the result in the HTTP response.
-
-**Example:** A monitoring application configures the reader's heartbeat interval through the Management interface.
-
-**MQTT API reference:** Use [`get_status`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_status) to retrieve reader status and [`get_config`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_config) to retrieve the reader configuration.
+- Configuring network and time settings.
+- Retrieving reader information, status, and configuration.
+- Managing certificates.
+- Updating firmware.
+- Configuring heartbeat and event reporting settings.
+- Configuring communication endpoints.
 
 ## Control Interface
 
-Use the **Control** interface to start and stop RFID inventory and perform other supported RFID operations.
+The Control interface enables applications to control RFID operations and configure how the reader interacts with RFID tags.
 
-Control operations include selecting an operating mode, configuring how tags are read, and performing supported tag memory operations.
+Typical operations include:
 
-An application can send control commands through MQTT or the local REST API:
+- Configuring the RFID operating mode.
+- Starting and stopping RFID inventory.
+- Configuring tag reading behavior.
+- Performing supported tag memory operations.
 
-- **MQTT:** The application publishes a command to the configured command topic and receives the response on the configured response topic.
-- **Local REST:** The application sends a request to the reader and receives the result in the HTTP response.
-
-**Example:** A warehouse application sends a start inventory command when a shipment arrives at a dock door. The reader returns the command response through the Control interface and sends tag observations through the Data interface.
-
-**MQTT API reference:** Use [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) to configure the operating mode, [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) to start reading, and [`stop`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-stop) to stop reading.
+Command responses are returned through the Control interface, while tag observations generated during RFID operations are delivered through the Data interface.
 
 ## Data Interface
 
-Use the **Data** interface to receive RFID tag observations and, on supported readers, Bluetooth Low Energy (BLE) beacon detections.
+The Data interface delivers RFID tag observations and, on supported readers, Bluetooth Low Energy (BLE) scan data to external applications.
 
-A tag observation can include information such as the Electronic Product Code (EPC), timestamp, antenna identifier, and signal strength.
+A tag observation can include information such as:
 
-The reader provides **Tag Data 1** and **Tag Data 2** interfaces. Configure each interface separately to send data to its intended destination.
+- Electronic Product Code (EPC).
+- Timestamp.
+- Antenna identifier.
+- Signal strength.
 
-The Data interface also provides settings for:
+The reader provides two configurable data interfaces:
 
-- **Batching:** Groups observations into messages according to the configured settings.
-- **Retention:** Controls how events are buffered, including during a connection interruption.
+- **Tag Data 1**
+- **Tag Data 2**
 
-**Example:** A reader sends tag observations to two destinations. A local application uses them to track items passing through a dock door, while a cloud application uses them for inventory reporting.
-
-**MQTT event reference:** See [Tag Data Events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) for the event format.
+Both interfaces can be configured independently to deliver observations to the same or different destinations.
 
 ## Management Events Interface
 
-Use the **Management Events** interface to receive information about reader health and operational status.
+The Management Events interface enables applications to monitor the reader's health and operational status.
 
-Events can include heartbeats, warnings, errors, general-purpose input (GPI) state changes, and on-reader application events. Heartbeats are sent at the configured interval; other events are sent when the corresponding condition occurs.
+Supported events can include:
 
-**Example:** A monitoring application configures the heartbeat interval through the Management interface. It then receives heartbeat events through the Management Events interface.
+- Heartbeats.
+- General-purpose input (GPI) state changes.
+- Warnings and errors.
+- On-reader application events.
 
-**MQTT event reference:** See [Heartbeat](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-heartbeat) for the event format.
+Heartbeats are generated at the configured interval. Other events are generated when the corresponding condition occurs.
+
+## Interface Communication
+
+ZIoTC uses two communication models based on the purpose of the interface.
+
+### Command and Response Communication
+
+The Management and Control interfaces use command-response communication.
+
+| Communication Method | Description |
+|---|---|
+| **MQTT** | The application publishes a command to the configured command topic and receives the response on the configured response topic. |
+| **Local REST API** | The application sends an HTTP request to the reader and receives the result in the HTTP response. |
+
+{/* Command-response communication illustration requested for this section. */}
+
+### Asynchronous Data and Event Communication
+
+The Data and Management Events interfaces deliver observations and events without requiring an individual request for each message.
+
+| Communication Method | Description |
+|---|---|
+| **MQTT** | The reader publishes observations or events to a configured topic. Applications subscribe to the topic to receive messages. |
+| **HTTP POST** | The reader sends observations or events to a configured HTTP endpoint. |
+
+Available communication methods depend on the reader model and firmware.
+
+{/* Asynchronous communication illustration requested for this section. */}
+
+## How the Interfaces Work Together
+
+Consider a fixed RFID reader installed at a warehouse dock door to track incoming shipments.
+
+1. The application uses the **Management** interface to configure the reader, communication endpoints, and heartbeat settings.
+2. The application uses the **Control** interface to configure the operating mode and start RFID inventory.
+3. As tagged items pass through the dock door, the reader delivers tag observations through the **Data** interface.
+4. The reader reports heartbeats, warnings, and errors through the **Management Events** interface.
+5. When the operation is complete, the application uses the **Control** interface to stop RFID inventory.
+
+Reader health monitoring can continue independently of RFID inventory operations.
+
+{/* Warehouse interface workflow illustration requested for this section. */}
+
+## API References
+
+For supported commands, request and response schemas, and event formats, see the following references:
+
+- [MQTT API Reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/)
+- [REST API Reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger)
