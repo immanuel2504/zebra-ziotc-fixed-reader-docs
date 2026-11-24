@@ -8,7 +8,7 @@ sidebar_custom_props: { emoji: "⚡", card: "Configure Control and Tag Data over
 doc_type: tutorial
 page_meta:
   - "Audience: Administrators and integrators"
-  - "Read time: 6 min"
+  - "Read time: 10 min"
 ---
 
 In this quickstart, you configure the reader's **Control** and **Tag Data 1** interfaces to use MQTT, start RFID inventory, and receive a tag observation in an MQTT client.
@@ -86,8 +86,65 @@ The example response is shortened. Version values and other fields depend on the
 
 ## Step 4: Start Inventory and Read a Tag
 
-1. Configure an RFID operating mode suitable for a basic inventory, with the intended antenna enabled. See the MQTT [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) and [`get_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_mode) commands.
-2. In your MQTT client, publish the following message to the **Control command topic**:
+### Configure the Operating Mode
+
+Publish the following `set_mode` request to the **Control command topic**. This example selects `SIMPLE` mode, uses antenna 1, and requests the antenna number in tag reports. Use the antenna port or beam appropriate for your reader and installation. This command changes the reader's operating mode settings.
+
+**Request:**
+
+```json
+{
+  "command": "set_mode",
+  "command_id": "req-set-mode-01",
+  "payload": {
+    "type": "SIMPLE",
+    "antennas": [1],
+    "tagMetaData": ["ANTENNA"]
+  }
+}
+```
+
+**Example response on the Control response topic:**
+
+```json
+{
+  "command": "set_mode",
+  "command_id": "req-set-mode-01",
+  "response": "success",
+  "payload": {}
+}
+```
+
+To check the configured mode, publish `get_mode` to the **Control command topic**:
+
+```json
+{
+  "command": "get_mode",
+  "command_id": "req-get-mode-01",
+  "payload": {}
+}
+```
+
+**Example response on the Control response topic:**
+
+```json
+{
+  "command": "get_mode",
+  "command_id": "req-get-mode-01",
+  "response": "success",
+  "payload": {
+    "type": "SIMPLE",
+    "antennas": [1],
+    "tagMetaData": ["ANTENNA"]
+  }
+}
+```
+
+The actual response can include additional settings. Confirm that the mode and antenna configuration are suitable before starting inventory. See the MQTT [`set_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_mode) and [`get_mode`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-get_mode) references.
+
+### Start Inventory
+
+1. In your MQTT client, publish the following message to the **Control command topic**:
 
    ```json
    {
@@ -99,7 +156,7 @@ The example response is shortened. Version values and other fields depend on the
    }
    ```
 
-3. Check the Control response topic for the matching `command_id`. An example successful response is:
+2. Check the Control response topic for the matching `command_id`. An example successful response is:
 
    ```json
    {
@@ -110,7 +167,24 @@ The example response is shortened. Version values and other fields depend on the
    }
    ```
 
-4. Present the test tag to the antenna and check the Tag Data topic for an observation.
+### Receive Tag Data
+
+Present the test tag to the antenna and check the subscribed **Tag Data topic**. An example observation is:
+
+```json
+{
+  "type": "SIMPLE",
+  "timestamp": "2019-08-24T14:15:22Z",
+  "data": {
+    "antenna": 1,
+    "eventNum": 1,
+    "format": "epc",
+    "idHex": "3005fb63ac1f3681ec880468"
+  }
+}
+```
+
+The tag identifier (`idHex`), timestamp, and other fields vary by tag and reader configuration.
 
 See the MQTT [`start`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-start) command and [tag data events](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-tagDataEvents) reference. Use a new `command_id` for each command.
 
