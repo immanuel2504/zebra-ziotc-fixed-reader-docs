@@ -402,7 +402,13 @@ The **connected** status confirms the broker connection. Receiving the expected 
 
 Use an MQTT command or the local REST API as an alternative to Steps 1–6. You can configure the broker connection, topics, and, where applicable, certificates, batching, and retention.
 
-- **MQTT** — If the reader's **Management** interface is already connected to a broker, send [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) to the Management command topic.
-- **Local REST API** — Send the configuration directly to the reader using [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig).
+| API | Configuration Method |
+| --- | --- |
+| **Local REST API** | Send the configuration directly to the reader using [`PUT /cloud/cloudConfig`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/System/setImportcloudconfig). |
+| **MQTT** | Send [`set_importCloudConfig`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_importCloudConfig) with the endpoint configuration to the Management command topic. |
+
+:::note
+To configure endpoints using MQTT, the reader's **Management** interface must already be connected to an MQTT broker.
+:::
 
 After applying the settings, continue to [Step 7: Verify Communication](#step-7-verify-communication).
