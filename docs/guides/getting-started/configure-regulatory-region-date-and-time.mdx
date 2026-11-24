@@ -20,6 +20,10 @@ Set the regulatory region for the reader's installation location and check its d
 3. Save or apply the setting and follow any prompts shown by the reader.
 4. Confirm that the selected region is displayed.
 
+![Reader dashboard with the regulatory country and communication standard](./images/reader-regulatory-region.png)
+
+<p className="figure-caption"><strong>Figure 1:</strong> Regulatory settings on the reader dashboard. Select the country for your installation location.</p>
+
 If the region is already configured, verify that it matches the installation location. Use the integration guide for your reader model for the location of the setting and any model-specific requirements.
 
 ### API Option: Configure the Regulatory Region
@@ -37,6 +41,10 @@ These commands require a configured and connected **Management** interface.
 1. In the reader's time settings, check the date, time, and time zone.
 2. If your deployment uses a network time server and the reader supports it, configure the server details provided by your administrator.
 3. Save the settings and confirm that the displayed time is correct.
+
+![Illustration of System Time Management showing date, time zone and SNTP settings](./images/reader-system-time-example.png)
+
+<p className="figure-caption"><strong>Figure 2:</strong> Illustration of the System Time Management dialog.</p>
 
 Accurate time helps the reader evaluate certificate validity for secure connections. Time settings and available synchronization methods can vary by model and firmware.
 
