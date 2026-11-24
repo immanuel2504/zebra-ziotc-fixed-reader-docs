@@ -296,12 +296,84 @@ If you configured **Management**, use the following example to request reader ve
    ```json
    {
      "command": "get_version",
-     "command_id": "req-001",
+     "command_id": "req-version-01",
      "payload": {}
    }
    ```
 
-4. On the Management response topic, confirm that the response has the matching `command_id` and indicates success. Use a new `command_id` for each request. See the [`get_version` reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version) for the response schema.
+4. Check the Management response topic. The response should contain the same `command_id` as the request. For example:
+
+   ```json
+   {
+     "command": "get_version",
+     "command_id": "req-version-01",
+     "response": "success",
+     "payload": {
+       "readerApplication": "2.0.7-5",
+       "radioFirmware": "2.1.57.0"
+     }
+   }
+   ```
+
+   This is a shortened example; the version values and other fields depend on the reader. See the [`get_version` reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version).
+
+### Start and Stop RFID Inventory
+
+To test the **Control** interface, first configure an RFID operating mode and enable an antenna. Subscribe to the Control response topic before publishing commands. To receive tag observations, also configure a Tag Data interface and subscribe to its topic. See the [MQTT Quickstart](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx).
+
+| Topic | Example |
+| --- | --- |
+| Control command | `readers/reader-01/control/command` |
+| Control response | `readers/reader-01/control/response` |
+| Tag Data | `readers/reader-01/data/tags1` |
+
+Use the topics configured on your reader. In MQTTX, publish each request to the **Control command** topic and check its response on the **Control response** topic.
+
+**Start request:**
+
+```json
+{
+  "command": "start",
+  "command_id": "req-start-01",
+  "payload": { "doNotPersistState": true }
+}
+```
+
+**Example start response:**
+
+```json
+{
+  "command": "start",
+  "command_id": "req-start-01",
+  "response": "success",
+  "payload": {}
+}
+```
+
+Present a tag to the antenna and check the Tag Data topic for an observation. When finished, publish the following request.
+
+**Stop request:**
+
+```json
+{
+  "command": "stop",
+  "command_id": "req-stop-01",
+  "payload": {}
+}
+```
+
+**Example stop response:**
+
+```json
+{
+  "command": "stop",
+  "command_id": "req-stop-01",
+  "response": "success",
+  "payload": {}
+}
+```
+
+Use a new `command_id` for each request and match it to the response. If the response is `failure`, check its payload for error details. See the [`start`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) and [`stop`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) references.
 
 ### Verify Other Interfaces
 
