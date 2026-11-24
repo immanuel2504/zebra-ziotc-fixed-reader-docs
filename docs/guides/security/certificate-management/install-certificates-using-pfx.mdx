@@ -78,10 +78,21 @@ This procedure describes installing a **client** PFX. The installation requireme
 
 Under **Current Certificate Details**, confirm that the certificate appears with the expected **Name**, **Type**, **Subject Name**, **Issuer**, and validity dates.
 
-![Illustration of an installed client certificate in Current Certificate Details](./images/pfx-installed-example.png)
+![Reader Certificates screen showing the installation fields and current certificate details](./images/pfx-current-certificate-details.png)
 
-<p className="figure-caption"><strong>Figure 2:</strong> Illustration of an installed client certificate.</p>
+<p className="figure-caption"><strong>Figure 2:</strong> Reader Certificates screen and current certificate details.</p>
+
+The example screen shows existing certificate entries; check your reader for the client certificate you installed.
 
 If it does not appear, check the URL, file server credentials, PFX password, and network connection.
 
 Installing a client PFX does not necessarily add its bundled CA certificate to the reader's trusted CA store. Configure the broker's trusted CA separately as required.
+
+## Install Using the API
+
+As an alternative to the web console, install the certificate using MQTT or the local REST API. The reader must be able to access the PFX file URL.
+
+- **MQTT** — If the Management interface is connected to a broker, send [`set_updateCertificate`](https://immanuel2504.github.io/fxr60-90-rest-mqtt/mqtt/docs/index.html#op-set_update_cert) to the Management command topic.
+- **Local REST API** — Send [`PUT /cloud/certificates`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/rest/docs/swagger#/Certificate/setUpdatecertificate) directly to the reader.
+
+See the applicable reference for request details. After installation, verify the certificate as described in Step 4.
