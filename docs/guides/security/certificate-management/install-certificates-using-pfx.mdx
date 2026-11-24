@@ -57,6 +57,10 @@ Use the URL and credentials provided by your file server administrator.
 
 3. Select **Update Certificate** and wait for the reader to download and install the certificate.
 
+![Illustration of the reader certificate installation fields with example values](./images/pfx-installation-example.png)
+
+<p className="figure-caption"><strong>Figure 1:</strong> Illustration of certificate installation settings.</p>
+
 ### Certificate Types
 
 The **Certificate Type** list can include:
@@ -74,14 +78,10 @@ This procedure describes installing a **client** PFX. The installation requireme
 
 Under **Current Certificate Details**, confirm that the certificate appears with the expected **Name**, **Type**, **Subject Name**, **Issuer**, and validity dates.
 
+![Illustration of an installed client certificate in Current Certificate Details](./images/pfx-installed-example.png)
+
+<p className="figure-caption"><strong>Figure 2:</strong> Illustration of an installed client certificate.</p>
+
 If it does not appear, check the URL, file server credentials, PFX password, and network connection.
 
-## Step 5: Select the Certificate for an Endpoint
-
-1. Go to **Settings > Endpoint** and select the interface to configure.
-2. Open the **Certificates** tab and select **Use Installed Certs**.
-3. In the **Certificate** list, select the certificate you installed.
-4. Configure the trusted CA and server verification settings required by the connection.
-5. Select **Preview**, review the configuration, and select **Publish**.
-
-Installing a client PFX does not necessarily add its bundled CA certificate to the reader's trusted CA store. Configure the broker's trusted CA separately as required. For the complete MQTT procedure, see [Connect to an MQTT Broker](../../connect-the-reader/connect-to-an-mqtt-broker.mdx).
+Installing a client PFX does not necessarily add its bundled CA certificate to the reader's trusted CA store. Configure the broker's trusted CA separately as required.
