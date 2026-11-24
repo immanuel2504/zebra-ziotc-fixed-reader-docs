@@ -315,11 +315,11 @@ If you configured **Management**, use the following example to request reader ve
 
 After you subscribe to the configured Tag Data topic, start RFID inventory through the Control interface and present a tag to the reader. MQTTX displays received messages under the subscription.
 
-![Illustration of an MQTTX subscription receiving a sample tag observation on the data topic](./images/mqttx-received-tag-data-example.png)
+![Illustration of an MQTTX subscription receiving a sample tag observation on the example Tag Data topic](./images/mqttx-received-tag-data-example-v2.png)
 
 <p className="figure-caption"><strong>Figure 12:</strong> Illustration of a tag observation received in MQTTX.</p>
 
-In this example, `data` is the topic, `idHex` is the tag identifier, and `antenna` identifies the antenna that read the tag. Topic names and message contents depend on your configuration.
+In this example, `readers/reader-01/data/tags1` is the topic from Step 3, `idHex` is the tag identifier, and `antenna` identifies the antenna that read the tag. Topic names and message contents depend on your configuration.
 
 The **connected** status confirms the broker connection. Receiving the expected response, tag data, or event confirms the message flow. To configure another interface, repeat Steps 1–6 using its settings, then perform the applicable verification above.
 
