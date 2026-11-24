@@ -145,16 +145,26 @@ If the broker requires client certificate authentication, configure the client c
 
 Use this option if the required client certificate and private key are already installed on the reader.
 
+![A PFX package is installed, then the installed certificate is selected in the endpoint settings](./images/mqtt-certificate-installed-flow.png)
+
+<p className="figure-caption"><strong>Figure 4:</strong> Using an installed certificate.</p>
+
 1. Select **Use Installed Certs**.
 2. In the **Certificate** list, select the required certificate.
 
 ![Certificates tab with Use Installed Certs selected](./images/mqtt-installed-certificates.png)
 
-<p className="figure-caption"><strong>Figure 4:</strong> Certificate settings using installed certificates.</p>
+<p className="figure-caption"><strong>Figure 5:</strong> Certificate settings using installed certificates.</p>
 
 #### Option B: Use Certificate File Paths
 
 Use this option if the client certificate and private key are available as individual files on the reader.
+
+![Certificate and private key files are transferred to the reader and their paths are entered in the endpoint settings](./images/mqtt-certificate-file-flow.png)
+
+<p className="figure-caption"><strong>Figure 6:</strong> Using certificate file paths.</p>
+
+The diagram shows SCP as an example transfer method. Use a transfer method supported by your reader and the file paths available on it.
 
 1. Clear **Use Installed Certs**.
 2. In **Certificate Path**, enter the absolute path to the client certificate.
@@ -162,7 +172,7 @@ Use this option if the client certificate and private key are available as indiv
 
 ![Certificates tab showing certificate and private key path fields](./images/mqtt-certificate-paths.png)
 
-<p className="figure-caption"><strong>Figure 5:</strong> Certificate settings using file paths.</p>
+<p className="figure-caption"><strong>Figure 7:</strong> Certificate settings using file paths.</p>
 
 The paths must refer to files accessible to the reader, not files on your computer.
 
@@ -191,7 +201,7 @@ Select the **Batching and Retention** tab and enter the settings required for th
 
 ![Batching and Retention tab with Tag Data 1 selected](./images/mqtt-batching-retention.png)
 
-<p className="figure-caption"><strong>Figure 6:</strong> Batching and retention settings for Tag Data 1.</p>
+<p className="figure-caption"><strong>Figure 8:</strong> Batching and retention settings for Tag Data 1.</p>
 
 ### Configure Batching
 
