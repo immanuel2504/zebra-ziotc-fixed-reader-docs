@@ -3,11 +3,85 @@ id: install-certificates-using-pfx
 title: "Install Certificates Using PFX"
 sidebar_label: "Install Certificates Using PFX"
 sidebar_position: 3
-description: "Find guidance for installing certificates from a PFX file."
-sidebar_custom_props: { emoji: "🛠", card: "Find guidance for installing certificates from a PFX file." }
+description: "Install a client certificate and private key from a PFX file."
+sidebar_custom_props: { emoji: "🛠", card: "Install a client certificate and private key from a PFX file." }
 doc_type: how-to
 page_meta:
   - "Audience: Administrators and integrators"
 ---
 
-This topic is being prepared.
+Install a client certificate and its private key on the reader using a password-protected PFX file. You can then select the installed certificate for a secure endpoint.
+
+## Before You Begin
+
+Obtain:
+
+- A PFX file containing the client certificate and its matching private key, and the PFX password.
+- A URL from which the reader can download the PFX file.
+- The file server username and password, if authentication is required.
+- Access to the reader web console and network access from the reader to the file server.
+
+## Step 1: Prepare the PFX File
+
+If you already have a PFX file, continue to Step 2. To create one from an existing client certificate and matching private key, run the following command on a computer with OpenSSL installed:
+
+```bash
+openssl pkcs12 -export -out reader.pfx -inkey client.key -in client.pem
+```
+
+When prompted, enter and confirm an export password. If you have additional certificates for the client certificate chain, include them with the OpenSSL `-certfile` option. Keep the PFX file and password secure.
+
+## Step 2: Make the PFX File Available
+
+Place the PFX file on a server that the reader can reach. The reader's Certificates screen lists HTTPS, SFTP, and FTPS as download sources. For example:
+
+```text
+https://files.example.com/certificates/reader.pfx
+```
+
+Use the URL and credentials provided by your file server administrator.
+
+## Step 3: Install the Certificate
+
+1. Sign in to the reader web console and select **Settings > Certificates**.
+2. Enter the following information:
+
+   | Field | Description |
+   | --- | --- |
+   | **Certificate Type** | Select the type appropriate for the certificate. For this MQTT client certificate example, select **client**. |
+   | **Name** | Enter a name, such as `reader-client`. |
+   | **URL** | Enter the PFX file URL. |
+   | **User ID** | Enter the file server username, if required. |
+   | **Password** | Enter the file server password, if required. |
+   | **PFX Password** | Enter the PFX export password. |
+
+3. Select **Update Certificate** and wait for the reader to download and install the certificate.
+
+### Certificate Types
+
+The **Certificate Type** list can include:
+
+| Type | Purpose |
+| --- | --- |
+| **client** | Identifies the reader when it connects to another system, such as an MQTT broker. |
+| **server** | Identifies the reader when it acts as a server. |
+| **app** | Used for an application certificate. |
+| **cacert** | Used for a Certificate Authority (CA) certificate. |
+
+This procedure describes installing a **client** PFX. The installation requirements for other types can differ.
+
+## Step 4: Verify the Installation
+
+Under **Current Certificate Details**, confirm that the certificate appears with the expected **Name**, **Type**, **Subject Name**, **Issuer**, and validity dates.
+
+If it does not appear, check the URL, file server credentials, PFX password, and network connection.
+
+## Step 5: Select the Certificate for an Endpoint
+
+1. Go to **Settings > Endpoint** and select the interface to configure.
+2. Open the **Certificates** tab and select **Use Installed Certs**.
+3. In the **Certificate** list, select the certificate you installed.
+4. Configure the trusted CA and server verification settings required by the connection.
+5. Select **Preview**, review the configuration, and select **Publish**.
+
+Installing a client PFX does not necessarily add its bundled CA certificate to the reader's trusted CA store. Configure the broker's trusted CA separately as required. For the complete MQTT procedure, see [Connect to an MQTT Broker](../../connect-the-reader/connect-to-an-mqtt-broker.mdx).
