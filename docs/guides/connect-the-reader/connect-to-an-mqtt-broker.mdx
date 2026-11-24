@@ -262,6 +262,8 @@ If it does not connect, check the broker address and port, network access, crede
 
 Use a compatible MQTT client to verify that the reader exchanges messages through the broker. This procedure uses [MQTTX](https://mqttx.app/) as an example; if you use another client, follow its instructions to connect, subscribe, and publish messages.
 
+Follow the checks for the interfaces you configured.
+
 ### Connect to the MQTT Broker
 
 1. Open MQTTX and create a new connection.
@@ -280,7 +282,7 @@ If interfaces use different brokers, create a separate MQTTX connection for each
 
 <p className="figure-caption"><strong>Figure 11:</strong> MQTTX subscription dialog with an example topic. Source: <a href="https://mqttx.app/docs/get-started">MQTTX documentation</a>.</p>
 
-### Publish a Command and Verify the Response
+### Check the Reader Version (Management)
 
 If you configured **Management**, use the following example to request reader version information. Subscribe to the Management response topic before sending the command.
 
@@ -317,9 +319,9 @@ If you configured **Management**, use the following example to request reader ve
 
    This is a shortened example; the version values and other fields depend on the reader. See the [`get_version` reference](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version).
 
-### Start and Stop RFID Inventory
+### Start RFID Inventory (Control)
 
-To test the **Control** interface, first configure an RFID operating mode and enable an antenna. Subscribe to the Control response topic before publishing commands. To receive tag observations, also configure a Tag Data interface and subscribe to its topic. See the [MQTT Quickstart](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx).
+If you configured **Control**, configure an RFID operating mode and enable an antenna. Subscribe to the Control response topic before publishing commands. To receive tag observations, also configure a Tag Data interface and subscribe to its topic. See the [MQTT Quickstart](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx).
 
 | Topic | Example |
 | --- | --- |
@@ -350,7 +352,19 @@ Use the topics configured on your reader. In MQTTX, publish each request to the 
 }
 ```
 
-Present a tag to the antenna and check the Tag Data topic for an observation. When finished, publish the following request.
+### Example: Tag Data in MQTTX
+
+If you configured a **Tag Data** interface, present a tag to the antenna after starting inventory. MQTTX displays the observation on the subscribed Tag Data topic.
+
+![Illustration of an MQTTX subscription receiving a sample tag observation on the example Tag Data topic](./images/mqttx-received-tag-data-example-v2.png)
+
+<p className="figure-caption"><strong>Figure 12:</strong> Illustration of a tag observation received in MQTTX.</p>
+
+In this example, `readers/reader-01/data/tags1` is the topic from Step 3, `idHex` is the tag identifier, and `antenna` identifies the antenna that read the tag. Topic names and message contents depend on your configuration.
+
+### Stop RFID Inventory (Control)
+
+When you have finished reading tags, publish the following request to the Control command topic.
 
 **Stop request:**
 
@@ -375,23 +389,9 @@ Present a tag to the antenna and check the Tag Data topic for an observation. Wh
 
 Use a new `command_id` for each request and match it to the response. If the response is `failure`, check its payload for error details. See the [`start`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) and [`stop`](https://techdocs.zebra.com/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) references.
 
-### Verify Other Interfaces
+### Verify Management Events
 
-| Interface | Verification |
-| --- | --- |
-| **Control** | Subscribe to the response topic, publish a supported control command to the command topic, and verify the response. |
-| **Tag Data 1 / Tag Data 2** | Subscribe to the publish topic, start RFID inventory, and verify that tag observations are received. For the full start-and-stop procedure, see the [MQTT Quickstart](../getting-started/quickstart-first-tag-to-mqtt-in-15-minutes.mdx). |
-| **Management Events** | Subscribe to the publish topic and confirm that an enabled event, such as a heartbeat, is received. |
-
-### Example: Tag Data in MQTTX
-
-After you subscribe to the configured Tag Data topic, start RFID inventory through the Control interface and present a tag to the reader. MQTTX displays received messages under the subscription.
-
-![Illustration of an MQTTX subscription receiving a sample tag observation on the example Tag Data topic](./images/mqttx-received-tag-data-example-v2.png)
-
-<p className="figure-caption"><strong>Figure 12:</strong> Illustration of a tag observation received in MQTTX.</p>
-
-In this example, `readers/reader-01/data/tags1` is the topic from Step 3, `idHex` is the tag identifier, and `antenna` identifies the antenna that read the tag. Topic names and message contents depend on your configuration.
+If you configured **Management Events**, subscribe to its publish topic and confirm that an enabled event, such as a heartbeat, is received.
 
 The **connected** status confirms the broker connection. Receiving the expected response, tag data, or event confirms the message flow. To configure another interface, repeat Steps 1–6 using its settings, then perform the applicable verification above.
 
