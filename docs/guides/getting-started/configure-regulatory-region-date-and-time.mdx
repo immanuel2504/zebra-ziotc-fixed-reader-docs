@@ -65,13 +65,16 @@ The **Regulatory** section displays the configured country and communication sta
 
 ### API Option: Configure the Regulatory Region
 
-You can configure and verify the region using MQTT commands:
+Use MQTT or the local REST API to retrieve supported values, configure the region, and verify the setting.
 
-1. Use [`get_supportedRegionList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_supportedRegionList) and [`get_supportedStandardList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_supportedStandardList) to find the values supported by the reader.
-2. Use [`set_region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_region) to configure the region using the country and standard values for the installation location.
-3. Use [`get_region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_region) to verify the setting.
+| Action | MQTT command | Local REST API |
+| --- | --- | --- |
+| List supported regions | [`get_supportedRegionList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_supportedRegionList) | [`GET /cloud/supportedRegionList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Region/getSupportedregionlist) |
+| List standards for a region | [`get_supportedStandardList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_supportedStandardList) | [`GET /cloud/supportedStandardList`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Region/getSupportedstandardlist) |
+| Configure the region | [`set_region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_region) | [`PUT /cloud/region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Region/setRegion) |
+| Verify the region | [`get_region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_region) | [`GET /cloud/region`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Region/getRegion) |
 
-These commands require a configured and connected **Management** interface.
+For MQTT, use a configured and connected **Management** interface. For local REST, authenticate with the reader and send requests directly to its HTTPS address. See the linked references for parameters and request bodies.
 
 ## Step 2: Configure the Date and Time
 
@@ -91,11 +94,16 @@ Accurate time helps the reader evaluate certificate validity for secure connecti
 
 ### API Option: Configure the Time Zone and Time Server
 
-With a configured and connected **Management** interface:
+Use MQTT or the local REST API to configure and check the time zone and network time server, where supported by your reader and firmware.
 
-1. Use [`set_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_timeZone) to set the time zone and [`get_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_timeZone) to check it.
-2. If supported by your reader and firmware, use [`set_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_ntpServer) to set the network time server and [`get_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_ntpServer) to check it.
-3. Confirm that the reader displays the correct date and time.
+| Action | MQTT command | Local REST API |
+| --- | --- | --- |
+| Set the time zone | [`set_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_timeZone) | [`PUT /cloud/timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Date%26Time/setTimezone) |
+| Check the time zone | [`get_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_timeZone) | [`GET /cloud/timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Date%26Time/getTimezone) |
+| Set the time server | [`set_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_ntpServer) | [`PUT /cloud/ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Date%26Time/updateNtpServer) |
+| Check the time server | [`get_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_ntpServer) | [`GET /cloud/ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Date%26Time/getNtpServer) |
+
+For MQTT, use the connected **Management** interface. For local REST, authenticate with the reader. After applying the settings, confirm that the reader displays the correct date and time.
 
 ## Step 3: Verify the Configuration
 
