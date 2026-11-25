@@ -5,14 +5,63 @@ sidebar_label: "Prepare, Install, and Discover the Reader"
 sidebar_position: 1
 description: "Prepare, install, and discover the reader using its integration guide."
 sidebar_custom_props: { emoji: "🧩", card: "Prepare, install, and discover the reader using its integration guide." }
-doc_type: explanation
+doc_type: how-to
 page_meta:
   - "Audience: Administrators and installers"
   - "Read time: 2 min"
 ---
 
-Before configuring the reader, prepare the equipment and network access required for your installation.
+Before configuring the Zebra IoT Connector, ensure that the reader is installed, powered on, and accessible over the network.
 
-Use the [integration guide](https://www.zebra.com/content/dam/support-dam/en/documentation/unrestricted/guide/product/fxseries-ig-en.pdf) for hardware requirements and instructions to mount and power the reader, connect antennas and the network, and discover its address. For other reader models, find the applicable guide on [Zebra RFID Support](https://www.zebra.com/us/en/support-downloads/rfid.html).
+## Prepare for Installation
 
-After installation, obtain the reader's hostname or IP address and the credentials needed to sign in. Then continue to [Access the Reader Web Console](./discover-access-and-sign-in-to-the-reader.mdx).
+Ensure that you have the following:
+
+- A supported Zebra fixed RFID reader.
+- A compatible power supply or supported Power over Ethernet (PoE) connection.
+- Compatible RFID antennas and antenna cables, where required.
+- An Ethernet connection to an accessible network.
+- A computer with a supported web browser.
+- Administrator credentials for accessing the reader.
+- An RFID test tag to verify reader operation.
+
+For model-specific hardware requirements, refer to the applicable Integration Guide:
+
+- [FXR90 RFID Reader Integration Guide](https://docs.zebra.com/us/en/rfid/fxr90-rfid-reader-ig/c-fxr90-integration-guide.html)
+- [FX7500 and FX9600 RFID Reader Integration Guide](https://www.zebra.com/content/dam/support-dam/en/documentation/unrestricted/guide/product/fxseries-ig-en.pdf)
+
+For other reader models, refer to [Zebra RFID Support](https://www.zebra.com/us/en/support-downloads/rfid.html).
+
+## Install the Reader
+
+1. Mount the reader at the intended installation location.
+2. Connect the RFID antennas, where required.
+3. Connect the reader to the network.
+4. Connect the power supply or supported PoE connection.
+5. Verify that the power LED indicates that the reader is ready.
+
+For detailed mounting, cabling, power, and safety instructions, refer to the applicable Integration Guide listed above.
+
+## Discover the Reader
+
+After the reader is powered on and connected to the network, identify its hostname or IP address.
+
+Choose a discovery method based on your network environment.
+
+| Method | When to use |
+| --- | --- |
+| [123RFID Desktop](https://www.zebra.com/us/en/support-downloads/software/rfid-software/123rfid-desktop.html) | Discover supported readers on the local network. |
+| Windows Network Discovery | Discover supported readers using Windows File Explorer. |
+| Command Prompt | Obtain the IP address using the reader's hostname. |
+| DHCP lease records | Obtain the assigned IP address from your network administrator. |
+| Link-Local networking | Identify the reader's IP address when a DHCP server is unavailable. |
+
+The available discovery methods and default hostname format may vary by reader model. For detailed discovery and network connectivity instructions, refer to the applicable Integration Guide listed under **Prepare for Installation**.
+
+:::note
+If you already know the reader's hostname or IP address, you can skip discovery.
+:::
+
+## Next Step
+
+After installing the reader and identifying its hostname or IP address, continue to [Access the Reader Web Console](./discover-access-and-sign-in-to-the-reader.mdx) to connect to the reader and sign in.
