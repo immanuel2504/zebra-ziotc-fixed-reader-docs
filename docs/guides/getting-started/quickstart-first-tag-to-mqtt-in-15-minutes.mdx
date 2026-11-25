@@ -1,7 +1,7 @@
 ---
 id: quickstart-first-tag-to-mqtt-in-15-minutes
-title: "Quickstart: Read a Tag and Send Data through MQTT"
-sidebar_label: "Quickstart: Read a Tag and Send Data through MQTT"
+title: "Quickstart: Read Your First Tag over MQTT in 15 Minutes"
+sidebar_label: "Quickstart: Read Your First Tag over MQTT in 15 Minutes"
 sidebar_position: 6
 description: "Configure Control and Tag Data over MQTT, start inventory, and receive a tag observation."
 sidebar_custom_props: { emoji: "⚡", card: "Configure Control and Tag Data over MQTT, start inventory, and receive a tag observation." }
@@ -11,7 +11,10 @@ page_meta:
   - "Read time: 10 min"
 ---
 
-In this quickstart, you configure the reader's **Control** and **Tag Data 1** interfaces to use MQTT, start RFID inventory, and receive a tag observation in an MQTT client.
+In this quickstart, you configure the reader's **Control** and **Tag Data 1** interfaces to use MQTT, configure the operating mode, start RFID inventory, and receive your first tag observation in an MQTT client.
+
+- **Control** – Send commands to the reader and receive command responses.
+- **Tag Data 1** – Receive RFID tag observations from the reader.
 
 :::note
 Configure, preview, and publish each interface separately, even when both interfaces use the same broker.
@@ -19,42 +22,89 @@ Configure, preview, and publish each interface separately, even when both interf
 
 ## Before You Begin
 
-- Complete the reader installation, sign in to the web console, set the regulatory region, and [verify readiness](./verify-reader-readiness-and-status.mdx).
+- Complete the reader installation, sign in to the web console, set the regulatory region, and [verify reader readiness](./verify-reader-readiness-and-status.mdx).
 - Have a compatible RFID test tag and a configured antenna in the read area.
-- Have access to an MQTT broker and a client that can publish and subscribe. The reader and client must be able to reach the broker.
-- Obtain the broker's connection details, credentials, and certificates if required. Choose topics and permissions for the Control and Tag Data interfaces.
+- Have access to an MQTT broker and an MQTT client, such as [MQTTX](https://mqttx.app/), that can publish and subscribe to topics. Both the reader and the client must be able to reach the broker.
+- Obtain the broker connection details, credentials, and certificates, if required.
+- Ensure that the MQTT clients have the required permissions to publish and subscribe to the configured topics.
 
 ## Step 1: Configure the Control Interface
+
+Configure the Control interface to receive commands and publish command responses through the MQTT broker.
 
 1. In the reader web console, open **Settings > Endpoint** and select **Control**.
 2. Set **Endpoint Type** to **MQTT** and enter the broker connection details.
 3. On the **Topic** tab, configure the Control command and response topics.
-4. Configure certificates if required, select **Preview** to review the settings, and select **Publish**.
-5. Confirm that the Control interface shows **connected**.
+
+   Use your broker settings. The following example uses unencrypted TCP on a trusted test network.
+
+   | Setting | Example value |
+   |---|---|
+   | Endpoint Type | MQTT |
+   | Server | `192.168.0.10` |
+   | Port | `1883` |
+   | Protocol | TCP |
+   | Client ID | `reader-01-control` |
+   | Command Topic (reader subscribes) | `readers/reader-01/control/command` |
+   | Response Topic (reader publishes) | `readers/reader-01/control/response` |
+
+4. Configure certificates, if required.
+5. Select **Preview** to review the settings and select **Publish**.
+6. Confirm that the Control interface shows **connected**.
 
 For field descriptions and screenshots, see [Connect to an MQTT Broker](../connect-the-reader/connect-to-an-mqtt-broker.mdx).
 
 ## Step 2: Configure the Tag Data Interface
 
-1. Select **Tag Data 1** and set **Endpoint Type** to **MQTT**.
-2. Enter the broker connection details and configure the Tag Data topic on the **Topic** tab.
-3. Configure certificates and batching and retention as needed.
-4. Select **Preview**, review the settings for **Tag Data 1**, and select **Publish**.
-5. Confirm that the Tag Data 1 interface shows **connected**.
+Configure the Tag Data 1 interface to publish RFID tag observations to the MQTT broker.
 
-Use a different MQTT client ID for each active connection to the same broker.
+1. In **Settings > Endpoint**, select **Tag Data 1**.
+2. Set **Endpoint Type** to **MQTT** and enter the broker connection details.
+3. On the **Topic** tab, configure the Tag Data publish topic.
 
-## Step 3: Subscribe to the Topics
+   Use the following example settings:
 
-Connect your MQTT client to the broker used by each interface. If Control and Tag Data use different brokers, create a separate connection to each broker. Subscribe to the Control response topic and the Tag Data topic **before** sending the start command. Use the topic names configured for your deployment.
+   | Setting | Example value |
+   |---|---|
+   | Endpoint Type | MQTT |
+   | Server | `192.168.0.10` |
+   | Port | `1883` |
+   | Protocol | TCP |
+   | Client ID | `reader-01-data1` |
+   | Publish Topic | `readers/reader-01/data/tags1` |
 
-| Topic | Example |
-| --- | --- |
-| Control command | `readers/reader-01/control/command` |
-| Control response | `readers/reader-01/control/response` |
-| Tag Data | `readers/reader-01/data/tags1` |
+4. Configure certificates, batching, and retention as needed.
+5. Select **Preview**, review the settings for **Tag Data 1**, and select **Publish**.
+6. Confirm that the Tag Data 1 interface shows **connected**.
 
-### Optional: Check the Reader Version
+:::note
+Use a different MQTT client ID for each active connection to the same broker. For a secure broker connection, use its TLS port and configure the required credentials and certificates.
+:::
+
+For detailed configuration instructions, see [Connect to an MQTT Broker](../connect-the-reader/connect-to-an-mqtt-broker.mdx).
+
+## Step 3: Connect the MQTT Client and Subscribe to Topics
+
+1. Open your MQTT client.
+2. Create a connection using the broker connection details configured in Steps 1 and 2.
+3. Enter a unique client ID, such as `mqttx-quickstart`.
+4. Connect to the MQTT broker.
+5. Subscribe to the Control response and Tag Data topics before sending commands. Select JSON as the payload format and turn off **Retain** when publishing commands.
+
+Use the following table to identify the topics and their purpose.
+
+| Topic | Example | MQTT client action |
+|---|---|---|
+| Control command | `readers/reader-01/control/command` | Publish commands |
+| Control response | `readers/reader-01/control/response` | Subscribe to receive command responses |
+| Tag Data | `readers/reader-01/data/tags1` | Subscribe to receive tag observations |
+
+Use the actual topic names configured for your deployment.
+
+If the Control and Tag Data interfaces use different brokers, create a separate MQTT client connection to each broker.
+
+<details>
+<summary>Optional: Check the reader version through the Management interface</summary>
 
 If you also configured the **Management** interface for MQTT, you can verify it by requesting version information. Connect to its broker and subscribe to the configured Management response topic first. For example, publish to `readers/reader-01/management/command` and receive the response on `readers/reader-01/management/response`.
 
@@ -82,13 +132,17 @@ If you also configured the **Management** interface for MQTT, you can verify it 
 }
 ```
 
-The example response is shortened. Version values and other fields depend on the reader. See the [`get_version` reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version). You can continue without this optional Management check.
+The example response is shortened. Version values and other fields depend on the reader. See the [`get_version` reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version).
+
+</details>
 
 ## Step 4: Start Inventory and Read a Tag
 
 ### Configure the Operating Mode
 
-Publish the following `set_mode` request to the **Control command topic**. This example selects `SIMPLE` mode, uses antenna 1, and requests the antenna number in tag reports. Use the antenna port or beam appropriate for your reader and installation. This command changes the reader's operating mode settings.
+Publish the following `set_mode` request to the **Control command topic**.
+
+This example selects `SIMPLE` mode, uses antenna 1, and requests the antenna number in tag reports. Use the antenna port or beam appropriate for your reader and installation.
 
 **Request:**
 
@@ -115,7 +169,11 @@ Publish the following `set_mode` request to the **Control command topic**. This 
 }
 ```
 
-To check the configured mode, publish `get_mode` to the **Control command topic**:
+### Verify the Operating Mode
+
+To verify the configured operating mode, publish the following `get_mode` request to the **Control command topic**.
+
+**Request:**
 
 ```json
 {
@@ -140,11 +198,15 @@ To check the configured mode, publish `get_mode` to the **Control command topic*
 }
 ```
 
-The actual response can include additional settings. Confirm that the mode and antenna configuration are suitable before starting inventory. See the MQTT [`set_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_mode) and [`get_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_mode) references.
+The actual response can include additional settings. Confirm that the operating mode and antenna configuration are suitable before starting inventory.
+
+For more information, see the MQTT [`set_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_mode) and [`get_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_mode) command references.
 
 ### Start Inventory
 
-1. In your MQTT client, publish the following message to the **Control command topic**:
+1. In your MQTT client, publish the following `start` request to the **Control command topic**.
+
+   **Request:**
 
    ```json
    {
@@ -156,7 +218,9 @@ The actual response can include additional settings. Confirm that the mode and a
    }
    ```
 
-2. Check the Control response topic for the matching `command_id`. An example successful response is:
+2. Check the Control response topic for the matching `command_id`.
+
+   **Example response:**
 
    ```json
    {
@@ -167,9 +231,19 @@ The actual response can include additional settings. Confirm that the mode and a
    }
    ```
 
+3. Confirm that the command response indicates success.
+
+The reader starts RFID inventory.
+
+For more information, see the MQTT [`start`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) command reference.
+
 ### Receive Tag Data
 
-Present the test tag to the antenna and check the subscribed **Tag Data topic**. An example observation is:
+1. Place the RFID test tag within the antenna's read range.
+2. Monitor the subscribed **Tag Data topic** in your MQTT client.
+3. Verify that a tag observation is received.
+
+**Example tag observation:**
 
 ```json
 {
@@ -184,35 +258,125 @@ Present the test tag to the antenna and check the subscribed **Tag Data topic**.
 }
 ```
 
-The tag identifier (`idHex`), timestamp, and other fields vary by tag and reader configuration.
+| Field | Description |
+|---|---|
+| `type` | Type of tag observation generated by the reader. |
+| `timestamp` | Timestamp associated with the tag observation. |
+| `data.antenna` | Antenna that detected the tag. |
+| `data.eventNum` | Event sequence number. |
+| `data.format` | Format of the reported tag identifier. |
+| `data.idHex` | Tag identifier in hexadecimal format. |
 
-See the MQTT [`start`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) command and [tag data events](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-tagDataEvents) reference. Use a new `command_id` for each command.
+The tag identifier, timestamp, and other fields vary depending on the tag and reader configuration.
+
+For more information, see the [Tag Data Events](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-tagDataEvents) reference.
 
 ## Step 5: Stop Inventory
 
-Publish the following message to the same **Control command topic**:
+1. Publish the following `stop` request to the same **Control command topic**.
 
-```json
-{
-  "command": "stop",
-  "command_id": "req-stop-01",
-  "payload": {}
-}
-```
+   **Request:**
 
-Check the Control response topic for the matching `command_id`. For example:
+   ```json
+   {
+     "command": "stop",
+     "command_id": "req-stop-01",
+     "payload": {}
+   }
+   ```
 
-```json
-{
-  "command": "stop",
-  "command_id": "req-stop-01",
-  "response": "success",
-  "payload": {}
-}
-```
+2. Check the Control response topic for the matching `command_id`.
 
-After inventory stops, confirm that new tag observations stop arriving. If a response is `failure`, check its payload for error details.
+   **Example response:**
 
-See the MQTT [`stop`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) command reference.
+   ```json
+   {
+     "command": "stop",
+     "command_id": "req-stop-01",
+     "response": "success",
+     "payload": {}
+   }
+   ```
 
-If no tag observation arrives, check the antenna and operating mode, confirm both interfaces are connected, and verify that the MQTT client is subscribed to the configured Tag Data topic.
+3. Confirm that the reader stops inventory and no new RFID tag observations are generated.
+
+Previously buffered tag observations may still arrive after inventory stops, depending on the batching and retention configuration.
+
+If a command response indicates `failure`, check its payload for error details.
+
+For more information, see the MQTT [`stop`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) command reference.
+
+:::note
+Use a unique `command_id` for each command to correlate requests with their corresponding responses.
+:::
+
+You have successfully configured the reader to communicate over MQTT, started RFID inventory, and received your first RFID tag observation.
+
+## Alternative: Configure and Operate the Reader Using APIs
+
+You can also perform the interface configuration and RFID operations covered in this quickstart programmatically without using the reader web console.
+
+This approach is useful for automated reader provisioning, headless deployments, and application integration.
+
+The following table lists the REST API operations and equivalent MQTT commands.
+
+| Operation | REST API | MQTT Command |
+|---|---|---|
+| Authenticate | [`GET /cloud/localRestLogin`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Login/localrestlogin) | Connect to the broker using its authentication settings (Step 3). |
+| Configure MQTT interfaces | [`PUT /cloud/cloudConfig`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/System/setImportcloudconfig) | [`set_importCloudConfig`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_importCloudConfig) |
+| Check the reader version (optional) | [`GET /cloud/version`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/System/getVersion) | [`get_version`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_version) |
+| Configure the operating mode | [`PUT /cloud/mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Control/setMode) | [`set_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_mode) |
+| Verify the operating mode | [`GET /cloud/mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Control/getMode) | [`get_mode`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_mode) |
+| Start RFID inventory | [`PUT /cloud/start`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Control/startInventory) | [`start`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-start) |
+| Stop RFID inventory | [`PUT /cloud/stop`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html#/Control/stopInventory) | [`stop`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-stop) |
+
+### Using the Local REST API
+
+To perform the quickstart using the local REST API:
+
+1. Send `GET /cloud/localRestLogin` over HTTPS using HTTP Basic authentication with your reader administrator credentials. On success, use the token in `message` as `Authorization: Bearer <token>` on subsequent REST requests.
+2. Configure the required MQTT interfaces using `PUT /cloud/cloudConfig`.
+3. Verify that the configured interfaces are connected to the MQTT broker.
+4. Send `PUT /cloud/mode` with the mode settings shown in Step 4. For the REST request body, use the JSON object inside `payload`.
+5. Verify the operating mode using `GET /cloud/mode`.
+6. Connect your MQTT client to the broker and subscribe to the configured Tag Data topic.
+7. Start RFID inventory using `PUT /cloud/start`.
+8. Place the test tag within the antenna's read range and verify the received tag observation.
+9. Stop RFID inventory using `PUT /cloud/stop`.
+
+For authentication requirements, request parameters, payload examples, and response details, see the [REST API Reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html).
+
+### Using MQTT Commands
+
+To configure the MQTT interfaces programmatically, the Management interface must already be configured and connected to an MQTT broker.
+
+1. Connect your MQTT client to the broker used by the Management interface.
+2. Subscribe to the configured Management response topic.
+3. Publish `set_importCloudConfig` to the Management command topic to configure the Control and Tag Data 1 interfaces.
+4. Verify that both interfaces are connected to their configured brokers.
+5. Follow [Step 3](#step-3-connect-the-mqtt-client-and-subscribe-to-topics) through [Step 5](#step-5-stop-inventory) to configure the operating mode, start inventory, receive tag observations, and stop inventory.
+
+For command parameters, payload examples, and response details, see the [MQTT API Reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/).
+
+## Troubleshooting
+
+If you encounter issues during this quickstart, check the following:
+
+| Issue | Recommended action |
+|---|---|
+| MQTT client cannot connect to the broker. | Verify the broker address, port, credentials, and network connectivity. |
+| Reader interface shows disconnected. | Verify the endpoint configuration, broker availability, credentials, and certificates. |
+| No command response is received. | Verify the Control command and response topics, MQTT permissions, and interface connection status. |
+| Command response indicates failure. | Check the response payload for error details. |
+| RFID inventory fails to start. | Verify the regulatory region, operating mode, and antenna configuration. |
+| Inventory starts but no tag data is received. | Verify the Tag Data interface connection, topic subscription, antenna configuration, and tag position. |
+| MQTT connection disconnects unexpectedly. | Ensure that each active connection to the same broker uses a unique client ID. |
+| Tag observations contain incorrect timestamps. | Verify the reader's date, time, and time synchronization settings. |
+
+## Next Steps
+
+After successfully receiving an RFID tag observation through MQTT, explore the following resources:
+
+- [Connect to an MQTT Broker](../connect-the-reader/connect-to-an-mqtt-broker.mdx) – Configure additional MQTT connection, authentication, and security settings.
+- [REST API Reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/rest/docs/swagger.html) – Explore programmatic reader configuration and control.
+- [MQTT API Reference](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/) – Explore supported MQTT commands, responses, and events.
