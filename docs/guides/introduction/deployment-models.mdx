@@ -13,9 +13,11 @@ page_meta:
 
 import DeploymentModels from './images/deployment-models.png';
 
-Zebra IoT Connector (ZIoTC) can connect a reader to local applications, cloud services, or a combination of both. The deployment model depends on where the applications and services are located.
+Zebra IoT Connector (ZIoTC) supports local, cloud, and hybrid deployments. The deployment model depends on where applications run, where reader data is processed, and how the reader communicates with external systems.
 
-Each reader interface is configured separately and can use a different supported endpoint. The following diagram shows examples of local, cloud, and hybrid deployments.
+Each ZIoTC interface can be independently configured with a supported endpoint to meet the deployment requirements.
+
+The following diagram illustrates the three deployment models.
 
 <a href={DeploymentModels} aria-label="Open the deployment models illustration at full size">
   <img
@@ -26,35 +28,74 @@ Each reader interface is configured separately and can use a different supported
   />
 </a>
 
-<p className="figure-caption"><strong>Figure 1:</strong> Example ZIoTC deployment models.</p>
+<p className="figure-caption"><strong>Figure 1:</strong> ZIoTC deployment models.</p>
 
-## Local / On-Premises
+## Local (On-Premises) Deployment
 
-In a local deployment, the reader communicates with applications or services on the local network.
+In a local deployment, the reader communicates with applications and services hosted within the local network. Reader management, RFID operations, data processing, and monitoring can be performed locally.
 
-**Example:** The reader sends tag observations to a local MQTT broker. A warehouse application subscribes to the tag data and uses it to track items moving through a dock door.
+Depending on the interface, applications can communicate with the reader using supported methods such as MQTT, HTTP POST, WebSocket, TCP/IP, or the local REST API.
 
-A local deployment can be useful when an application needs to process data at the site.
+**Example:** A warehouse uses RFID readers installed at dock doors to track incoming and outgoing shipments. The readers send tag observations to a local MQTT broker. A warehouse inventory application subscribes to the tag data and updates inventory records.
 
-## Cloud
+A local deployment is suitable when:
 
-In a cloud deployment, the reader connects to a cloud IoT service over the network. Applications use the service to receive reader data and events or communicate with the reader.
+- Applications and infrastructure are hosted on-site.
+- Tag data needs to be processed locally.
+- Reader operations must not depend on internet connectivity.
+- Data must remain within the organization's local network.
 
-ZIoTC can connect to cloud services such as:
+## Cloud Deployment
 
-- **AWS IoT Core**
-- **Microsoft Azure IoT Hub**
+In a cloud deployment, the reader communicates with cloud-hosted applications and services through supported cloud endpoints.
 
-**Example:** A retailer connects readers at multiple locations to a cloud IoT service. An inventory application receives tag observations from the readers and uses them for reporting.
+ZIoTC supports integration with services such as AWS IoT Core, Microsoft Azure IoT Hub, and cloud-hosted MQTT brokers.
 
-The reader must have network access to the cloud endpoint and the credentials required by the selected service.
+**Example:** A retailer deploys RFID readers across multiple warehouses. The readers send tag observations and supported reader events to a cloud IoT platform. A centralized application processes the information for inventory reporting and reader monitoring.
 
-## Hybrid
+A cloud deployment is suitable when:
 
-In a hybrid deployment, the reader connects to both local and cloud destinations. Different interfaces can be configured for different purposes.
+- Readers are deployed across multiple locations.
+- Applications and data processing services are hosted in the cloud.
+- Centralized reader management and monitoring are required.
+- Data from multiple sites needs to be aggregated for reporting and analytics.
 
-**Example:** **Tag Data 1** sends observations to a local application for dock-door tracking, while **Tag Data 2** sends observations to a cloud service for inventory reporting.
+The reader must have network access to the configured cloud endpoints and the required authentication credentials or certificates.
 
-A hybrid deployment can support local processing and cloud-based reporting in the same solution.
+## Hybrid Deployment
 
-Configure the reader's interfaces and endpoints to match the selected deployment. For connection instructions, see [Connect the Reader](../connect-the-reader/index.mdx).
+In a hybrid deployment, the reader communicates with both local and cloud-based applications. Different ZIoTC interfaces can use different supported endpoints based on application requirements.
+
+**Example:** A warehouse uses a local application for dock-door tracking and a cloud application for centralized inventory reporting.
+
+The reader can be configured as follows:
+
+| Interface | Example Endpoint | Purpose |
+| --- | --- | --- |
+| Management | AWS IoT Core | Remote reader administration. |
+| Control | MQTT (local broker) | Local control of RFID operations. |
+| Tag Data 1 | HTTP POST | Deliver tag observations to a local inventory application. |
+| Tag Data 2 | Azure IoT Hub | Deliver tag observations to a cloud analytics application. |
+| Management Events | MQTT (cloud-hosted broker) | Centralized reader monitoring. |
+
+A hybrid deployment is suitable when:
+
+- Some operations must be performed locally.
+- Cloud services are required for centralized monitoring or analytics.
+- Multiple applications require reader data.
+- Local processing and cloud-based reporting are required within the same solution.
+
+## Choosing a Deployment Model
+
+| Consideration | Local | Cloud | Hybrid |
+| --- | --- | --- | --- |
+| Application location | On-premises | Cloud | On-premises and cloud |
+| Data processing | Local | Cloud | Local and cloud |
+| Network requirements | Local network | Connectivity to cloud endpoints | Local network and connectivity to cloud endpoints |
+| Typical use case | On-site inventory tracking | Centralized multi-site inventory management | Local automation and centralized reporting |
+
+Select a deployment model based on application requirements, network availability, data processing requirements, and infrastructure.
+
+For supported interfaces and endpoint types, see [Interfaces and Endpoints](./ziotc-interfaces.mdx).
+
+For endpoint configuration procedures, see [Connect the Reader](../connect-the-reader/index.mdx).
