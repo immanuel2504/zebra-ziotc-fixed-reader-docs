@@ -11,20 +11,57 @@ page_meta:
   - "Read time: 3 min"
 ---
 
-Set the regulatory region for the reader's installation location and check its date and time before starting RFID operations or configuring secure connections.
+Before starting RFID operations, configure the reader's regulatory region, date, and time.
 
-## Configure the Regulatory Region
+The regulatory region determines the permitted RFID operating frequencies and communication standards. Accurate date and time settings help ensure consistent timestamps in tag data, reader events, and diagnostic logs.
 
-1. Sign in to the reader web console.
-2. Open the reader's regulatory region settings and select the region that matches its physical location.
-3. Save or apply the setting and follow any prompts shown by the reader.
-4. Confirm that the selected region is displayed.
+## Before You Begin
 
-![Reader dashboard with the regulatory country and communication standard](./images/reader-regulatory-region.png)
+- Sign in to the reader web console with administrator privileges.
+- Identify the country in which the reader will operate.
 
-<p className="figure-caption"><strong>Figure 1:</strong> Regulatory settings on the reader dashboard. Select the country for your installation location.</p>
+For sign-in instructions, see [Access the Reader Web Console](./discover-access-and-sign-in-to-the-reader.mdx).
 
-If the region is already configured, verify that it matches the installation location. Use the integration guide for your reader model for the location of the setting and any model-specific requirements.
+## Step 1: Configure the Regulatory Region
+
+For global reader configurations, set the regulatory region before starting RFID operations.
+
+:::important
+Select the country or region in which the reader is physically installed. Operating the reader under an incorrect regulatory region is illegal.
+:::
+
+:::note
+Region configuration is not available on readers configured for operation in the United States under FCC rules. Skip this step for these readers.
+:::
+
+1. Locate the **Regulatory** section on the reader dashboard.
+2. Click the pencil icon to open the regulatory settings editor.
+
+![Regulatory section showing Country and Communication Standard as NOT SET and the pencil edit icon](./images/regulatory-settings-not-set.png)
+
+<p className="figure-caption"><strong>Figure 1:</strong> Regulatory settings on the reader dashboard.</p>
+
+3. Configure the following settings:
+
+   | Setting | Description |
+   | --- | --- |
+   | Region of Operation | Select the country or region where the reader will operate. |
+   | Communication Standard | Select a communication standard supported by the selected region. If only one standard is supported, it is selected automatically. |
+   | Channel Hopping | Enable channel hopping, if supported by the selected region. |
+   | Operating Channels | Select the required operating channels from the supported channels, if applicable. |
+
+4. Click the check icon to finalize the changes.
+
+   The **Regulatory Configuration** confirmation dialog appears.
+
+![Regulatory Configuration confirmation dialog with I Understand and SAVE CHANGES](./images/regulatory-configuration-confirmation.png)
+
+<p className="figure-caption"><strong>Figure 2:</strong> Regulatory configuration confirmation dialog.</p>
+
+5. Select **I Understand**.
+6. Click **SAVE CHANGES**.
+
+The **Regulatory** section displays the configured country and communication standard.
 
 ### API Option: Configure the Regulatory Region
 
@@ -36,15 +73,19 @@ You can configure and verify the region using MQTT commands:
 
 These commands require a configured and connected **Management** interface.
 
-## Configure Date and Time
+## Step 2: Configure the Date and Time
 
-1. In the reader's time settings, check the date, time, and time zone.
-2. If your deployment uses a network time server and the reader supports it, configure the server details provided by your administrator.
-3. Save the settings and confirm that the displayed time is correct.
+Configure the reader's date and time to ensure accurate timestamps in RFID tag data, reader events, and diagnostic logs.
+
+1. Open the reader's **System Time Management** dialog from the date and time display.
+2. Check the date and time under **Date and Time Sync** and select the appropriate **Time Zone**.
+3. If your deployment uses network time synchronization, enter the server hostname or IP address supplied by your administrator under **SNTP Configuration**. Enter a second server if required, then click **SET SNTP**.
+4. If setting the time manually, use the date and time controls provided by your reader and apply the change.
+5. Confirm that the reader displays the correct date and time.
 
 ![Illustration of System Time Management showing date, time zone and SNTP settings](./images/reader-system-time-example.png)
 
-<p className="figure-caption"><strong>Figure 2:</strong> Illustration of the System Time Management dialog.</p>
+<p className="figure-caption"><strong>Figure 3:</strong> Illustration of the System Time Management dialog.</p>
 
 Accurate time helps the reader evaluate certificate validity for secure connections. Time settings and available synchronization methods can vary by model and firmware.
 
@@ -55,5 +96,20 @@ With a configured and connected **Management** interface:
 1. Use [`set_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_timeZone) to set the time zone and [`get_timeZone`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_timeZone) to check it.
 2. If supported by your reader and firmware, use [`set_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-set_ntpServer) to set the network time server and [`get_ntpServer`](https://zebra-stage.github.io/dcs/rfid/fxr-api-docs/mqtt/docs/#op-get_ntpServer) to check it.
 3. Confirm that the reader displays the correct date and time.
+
+## Step 3: Verify the Configuration
+
+Verify that:
+
+- The **Country** matches the reader's physical installation location.
+- The **Communication Standard** is configured.
+- The reader displays the correct date and time.
+
+For model-specific configuration instructions, refer to the applicable Integration Guide:
+
+- [FXR90 RFID Reader Integration Guide](https://docs.zebra.com/us/en/rfid/fxr90-rfid-reader-ig/c-fxr90-integration-guide.html)
+- [FX7500 and FX9600 RFID Reader Integration Guide](https://www.zebra.com/content/dam/support-dam/en/documentation/unrestricted/guide/product/fxseries-ig-en.pdf)
+
+For other reader models, refer to [Zebra RFID Support](https://www.zebra.com/us/en/support-downloads/rfid.html).
 
 Continue to [Verify Reader Readiness and Status](./verify-reader-readiness-and-status.mdx).
